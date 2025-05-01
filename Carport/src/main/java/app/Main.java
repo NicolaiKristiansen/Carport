@@ -18,5 +18,6 @@ public class Main {
         // Routing
         StatusPageMapper statusPageMapper = new StatusPageMapper();
         statusPageMapper.addRoutes(app);
+        //
     }
 }
