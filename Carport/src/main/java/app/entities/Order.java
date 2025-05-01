@@ -7,7 +7,7 @@ public class Order {
     private int totalPrice;
     private User user;
 
-    public Order(int orderStatusId, int carportWidth, int carportLength, int totalPrice, User user) {
+    public Order(int orderStatusId, int carportWidth, int carportLength, int totalPrice, int price, User user) {
         this.orderStatusId = orderStatusId;
         this.carportWidth = carportWidth;
         this.carportLength = carportLength;
