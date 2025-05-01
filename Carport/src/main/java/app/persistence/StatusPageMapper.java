@@ -13,8 +13,11 @@ public class StatusPageMapper {
 
 
     public static void addRoutes(Javalin app){
-        app.get("/", ctx -> statuspage(ctx));
-        app.post("/", ctx -> statuspage(ctx));
+        app.get("/", ctx -> ctx.render("frontPage.html"));
+        app.get("/login", ctx -> ctx.render("loginPage.html"));
+        app.get("/createAccount", ctx -> ctx.render("createAccountPage.html"));
+        app.get("/status", ctx -> statuspage(ctx));
+        app.post("/status", ctx -> statuspage(ctx));
     }
 
     //TODO: Replace with function to get data from database
@@ -36,7 +39,7 @@ public class StatusPageMapper {
         List<CustomerOrders> orders = makeOrders();
         System.out.println(orders);
         ctx.attribute("orders", orders);
-        ctx.render("status page.html");
+        ctx.render("statusPage.html");
 
     }
 
