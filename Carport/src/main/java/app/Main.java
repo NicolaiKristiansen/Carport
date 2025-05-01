@@ -1,5 +1,6 @@
 package app;
 
+import app.persistence.StatusPageMapper;
 import io.javalin.Javalin;
 import io.javalin.rendering.template.JavalinThymeleaf;
 import app.config.SessionConfig;

@@ -1,7 +1,7 @@
-package app;
+package app.persistence;
 
+import app.entities.CustomerOrders;
 import io.javalin.Javalin;
-import org.postgresql.jdbc2.optional.ConnectionPool;
 import io.javalin.http.Context;
 
 
