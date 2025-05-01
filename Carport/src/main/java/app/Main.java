@@ -20,5 +20,6 @@ public class Main {
         StatusPageMapper statusPageMapper = new StatusPageMapper();
         statusPageMapper.addRoutes(app);
         //dddd
+        //Comments are nice
     }
 }
