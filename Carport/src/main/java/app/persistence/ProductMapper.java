@@ -41,7 +41,7 @@ public class ProductMapper {
 
 
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException(e.getMessage());
         }
         return productVariants;
     }
