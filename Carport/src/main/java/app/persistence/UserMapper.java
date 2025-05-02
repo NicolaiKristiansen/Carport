@@ -39,6 +39,7 @@ public class UserMapper {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+        return null;
     }
 
     public ArrayList<User> getAllUsers(ConnectionPool connectionPool) throws DatabaseException {
