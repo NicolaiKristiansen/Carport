@@ -34,6 +34,7 @@ public class UserMapper {
         }
     return users;
     }
+    //It worked
 
     public void insertUser(User user, ConnectionPool connectionPool) throws DatabaseException {
         String sql = "INSERT INTO users (email, password, phone, role) VALUES (?, ?, ?, ?)";
