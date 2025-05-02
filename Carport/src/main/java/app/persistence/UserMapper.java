@@ -11,6 +11,36 @@ import java.util.ArrayList;
 
 public class UserMapper {
 
+    public static User login(String username, String password, ConnectionPool connectionPool) {
+        String sql = "select * from users when username = ? and password = ?";
+
+        try(
+                Connection connection = connectionPool.getConnection();
+                PreparedStatement preparedStatement = connection.prepareStatement(sql);
+
+                ) {
+            preparedStatement.setString(1, username);
+            preparedStatement.setString(2, password);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while(resultSet.next()) {
+                String existingUsername = resultSet.getString("username");
+                if (username.equals(existingUsername)){
+                    String existingPassword = resultSet.getString("password");
+                    if (password.equals(existingPassword)){
+                        System.out.println("Successfully logged on");
+                    }
+                }
+
+            }
+
+
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public ArrayList<User> getAllUsers(ConnectionPool connectionPool) throws DatabaseException {
         String sql = "select * from users";
         ArrayList<User> users = new ArrayList<>();
