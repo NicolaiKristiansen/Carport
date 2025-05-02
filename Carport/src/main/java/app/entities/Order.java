@@ -1,18 +1,28 @@
 package app.entities;
 
 public class Order {
+    private int orderId;
     private int orderStatusId;
     private int carportWidth;
     private int carportLength;
     private int totalPrice;
     private User user;
 
-    public Order(int orderStatusId, int carportWidth, int carportLength, int totalPrice, int price, User user) {
+    public Order(int orderId, int orderStatusId, int carportWidth, int carportLength, int totalPrice, User user) {
+        this.orderId = orderId;
         this.orderStatusId = orderStatusId;
         this.carportWidth = carportWidth;
         this.carportLength = carportLength;
         this.totalPrice = totalPrice;
         this.user = user;
+    }
+
+    public int getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(int orderId) {
+        this.orderId = orderId;
     }
 
     public int getCarportWidth() {
@@ -58,7 +68,8 @@ public class Order {
     @Override
     public String toString() {
         return "Order{" +
-                "orderStatusId=" + orderStatusId +
+                "orderId=" + orderId +
+                ", orderStatusId=" + orderStatusId +
                 ", carportWidth=" + carportWidth +
                 ", carportLength=" + carportLength +
                 ", totalPrice=" + totalPrice +

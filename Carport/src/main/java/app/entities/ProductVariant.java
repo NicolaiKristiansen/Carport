@@ -5,7 +5,7 @@ public class ProductVariant {
     private Product product;
     private int length;
 
-    public ProductVariant(Product product, int productVariantId, int length) {
+    public ProductVariant(int productVariantId,Product product, int length) {
         this.product = product;
         this.productVariantId = productVariantId;
         this.length = length;

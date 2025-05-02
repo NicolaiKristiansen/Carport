@@ -110,7 +110,7 @@ public class OrderMapper {
                 Connection connection = connectionPool.getConnection();
                 PreparedStatement ps = connection.prepareStatement(sql);
 
-        ){ ps.setInt(1, ); //TODO: Find how to get order_id
+        ){ ps.setInt(1, orderItem.getOrder().getOrderId()); //TODO: Find how to get order_id
             ps.setInt(2, orderItem.getProductVariant().getProductVariantId());
             ps.setInt(3, orderItem.getQuantity());
             ps.setString(4, orderItem.getDescription());
