@@ -45,7 +45,7 @@ public class UserMapper {
                 ){
             ps.setString(1, user.getUsername());
             ps.setString(2, user.getPassword());
-            ps.setString(3, ); //TODO: We need phone number
+           // ps.setString(3, ); //TODO: We need phone number
             ps.setString(4, user.getRole());
             int affectedTable = ps.executeUpdate();
             if (affectedTable > 0){
