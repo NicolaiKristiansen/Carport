@@ -23,7 +23,7 @@ public class Main {
     private static final ConnectionPool connectionPool = ConnectionPool.getInstance(USER, PASSWORD, URL, DB);
 
     public static void main(String[] args) throws DatabaseException {
-
+        //Message to comit and update
         UserMapper userMapper = new UserMapper();
 
         //TODO: Delete later
