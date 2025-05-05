@@ -12,15 +12,17 @@
 </div>
 
 <div class="enterfield">
+    <form method="post">
     <p>Venligst indsæt din email</p>
     <input type="text">
     <p>Venligst indtast dit kodeord</p>
     <input type="password">
     <p>Venligst gentag dit kodeord</p>
-    <input type="password">
+    <input type="password2">
     <br>
     <br>
-    <button type="submit">Skab konto</button>
+    <button type="submit" formaction="/createAccount">Skab konto</button>
+    </form>
     <br>
     <br>
     <a href="/login">Log ind, hvis du har en konto</a>
