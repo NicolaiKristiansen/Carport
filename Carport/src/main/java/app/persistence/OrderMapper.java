@@ -15,6 +15,8 @@ import java.util.List;
 public class OrderMapper {
 
     public static List<Order> getAllOrders(ConnectionPool connectionPool) throws DatabaseException {
+        //Delete this comment
+
         List<Order> orderList = new ArrayList<>();
         String sql = "SELECT * FROM orders inner join users using(user_id)";
         try (
