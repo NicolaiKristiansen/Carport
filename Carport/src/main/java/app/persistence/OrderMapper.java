@@ -79,7 +79,7 @@ public class OrderMapper {
 
 
     //Needs method "insertOrder"
-    public void insertOrder(Order order, ConnectionPool connectionPool) throws DatabaseException{
+    public static void insertOrder(Order order, ConnectionPool connectionPool) throws DatabaseException{
         String sql = "INSERT INTO orders (carport_width, carport_length, status, user_id) VALUES (?, ?, ?, ?)";
 
         try(
@@ -103,7 +103,7 @@ public class OrderMapper {
     }
 
     //Needs method "insertOrderItems"
-    public void insertOrderItem(OrderItem orderItem, ConnectionPool connectionPool) throws DatabaseException{
+    public static void insertOrderItem(OrderItem orderItem, ConnectionPool connectionPool) throws DatabaseException{
         String sql = "INSERT INTO orders (order_id, product_variant, quantity, description) VALUES (?, ?, ?, ?)";
 
         try(
