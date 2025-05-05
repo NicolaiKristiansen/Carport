@@ -3,16 +3,14 @@ package app.persistence;
 import app.entities.User;
 import app.exceptions.DatabaseException;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 
 public class UserMapper {
 
+
     public static User login(String username, String password, ConnectionPool connectionPool) {
-        String sql = "select * from users when username = ? and password = ?";
+        String sql = "select * from users WHERE email = ? and password = ?";
 
         try(
                 Connection connection = connectionPool.getConnection();
@@ -31,11 +29,7 @@ public class UserMapper {
                         System.out.println("Successfully logged on");
                     }
                 }
-
             }
-
-
-
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -67,26 +61,36 @@ public class UserMapper {
     }
     //It worked
 
-    public void insertUser(User user, ConnectionPool connectionPool) throws DatabaseException {
-        String sql = "INSERT INTO users (email, password, phone, role) VALUES (?, ?, ?, ?)";
+    public User insertUser(User user, ConnectionPool connectionPool) throws DatabaseException {
+        boolean result = false;
+        int newId = 0;
+        String sql = "INSERT INTO users (email, password, role) VALUES (?, ?, ?)";
         try(
                 Connection connection = connectionPool.getConnection();
-                PreparedStatement ps = connection.prepareStatement(sql);
+                PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
                 ){
             ps.setString(1, user.getUsername());
             ps.setString(2, user.getPassword());
            // ps.setString(3, ); //TODO: We need phone number
-            ps.setString(4, user.getRole());
-            int affectedTable = ps.executeUpdate();
-            if (affectedTable > 0){
-                System.out.println("User " + user.getUsername() + " inserted successfully");
+            ps.setString(3, user.getRole());
+
+            int rowsAffected = ps.executeUpdate();
+            if (rowsAffected == 1){
+                result = true;
+            }
+            ResultSet idResultset = ps.getGeneratedKeys();
+            if (idResultset.next()){
+                newId = idResultset.getInt(1);
+                user.setUserId(newId);
             } else {
-                System.out.println("User " + user.getUsername() + " could not be inserted");
+                user = null;
             }
         }catch (SQLException ex){
             ex.printStackTrace();
         }
+
+        return user;
     }
 
     public void deleteUser(User user, ConnectionPool connectionPool) throws DatabaseException {

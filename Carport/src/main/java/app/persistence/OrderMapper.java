@@ -47,7 +47,7 @@ public class OrderMapper {
     //Needs method "getOrderItemsByOrderId"
     public static List<Order> getOrderItemsByOrderID(int id, ConnectionPool connectionPool) throws DatabaseException {
         List<Order> orderList = new ArrayList<>();
-        String sql = "SELECT * FROM orders WHERE orderId = ? inner join users using(user_id)";
+        String sql = "SELECT * FROM orders WHERE orders.order_id = ? inner join users using(user_id)";
         try (
                 Connection connection = connectionPool.getConnection();
                 PreparedStatement preparedStatement = connection.prepareStatement(sql);
