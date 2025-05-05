@@ -13,6 +13,7 @@ public class User {
         this.role = role;
     }
 
+    //When entering a new User the id will be auto generated so we don't need to make it when
     public User(String username, String password, String role) {
         this.username = username;
         this.password = password;

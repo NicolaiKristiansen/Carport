@@ -14,13 +14,15 @@
 <br>
 
 <div class="login">
+  <form method="post">
   <p>Venligst indsæt din email</p>
-  <input type="text">
+  <input type="text" name="email">
   <p>Venligst indtast dit kodeord</p>
-  <input type="password">
+  <input type="password" name="password">
   <br>
   <br>
-  <button type="submit">Log ind</button>
+  <button type="submit" formaction="/login">Log ind</button>
+  </form>
   <br>
   <br>
   <a href="/createAccount">Lav en konto</a>
