@@ -37,7 +37,9 @@ public class OrderController {
 
     }
 
-    private static void showSketch(Context ctx, ConnectionPool connectionPool) {}
+    private static void showSketch(Context ctx, ConnectionPool connectionPool) {
+
+    }
 
     private static void showBom (Context ctx, ConnectionPool connectionPool) throws DatabaseException {
         int orderId = Integer.parseInt(ctx.pathParam("order_id"));

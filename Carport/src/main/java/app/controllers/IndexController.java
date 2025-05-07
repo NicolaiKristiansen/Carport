@@ -3,6 +3,7 @@ package app.controllers;
 import app.persistence.ConnectionPool;
 import app.persistence.StatusPageMapper;
 import io.javalin.Javalin;
+import io.javalin.http.Context;
 
 import static app.persistence.StatusPageMapper.statuspage;
 
@@ -19,5 +20,10 @@ public class IndexController {
         app.post("/createAccount", ctx -> userController.createAccount(ctx, connectionPool));
         app.get("/status", ctx -> statuspage(ctx));
         app.post("/status", ctx -> statuspage(ctx));
+        app.get("/SVG", ctx -> showSVG(ctx));
+    }
+
+    public static void showSVG(Context ctx){
+
     }
 }
