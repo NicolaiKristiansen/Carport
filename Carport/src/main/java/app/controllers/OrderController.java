@@ -6,9 +6,12 @@ import app.exceptions.DatabaseException;
 import app.persistence.ConnectionPool;
 import app.persistence.OrderMapper;
 import app.services.Calculator;
+import app.services.CarportSVG;
+import app.services.SVG;
 import io.javalin.http.Context;
 
 import java.util.List;
+import java.util.Locale;
 
 public class OrderController {
 
@@ -58,5 +61,23 @@ public class OrderController {
         }catch(DatabaseException e){
             throw new RuntimeException(e);
         }
+    }
+
+    public void sendSketch(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
+
+        CarportSVG svg = new CarportSVG(600, 700);
+
+        Locale.setDefault(new Locale("US"));
+
+        String universalStyle = "stroke:black; fill:white";
+
+        SVG carportSvg = new SVG(0, 0, "0 0 855 690", "100%", "auto");
+        carportSvg.addRectangle(0,0,600,780, universalStyle);
+
+        //This String should    be replaced with a sketch based on our calculations
+
+
+        ctx.attribute("sketch", svg.toString());
+        ctx.render("SVGLearning");//Where it should be sent to
     }
 }
