@@ -1,6 +1,7 @@
 package app.services;
 
 public class CarportSVG {
+    /*
     private SVG svgDrawing;
     private int width;
     private int length;
@@ -29,4 +30,6 @@ public class CarportSVG {
         }
     }
     private void addPost(){}
+
+     */
 }
