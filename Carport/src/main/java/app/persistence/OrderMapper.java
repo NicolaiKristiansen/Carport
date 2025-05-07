@@ -14,8 +14,7 @@ import java.util.List;
 
 public class OrderMapper {
 
-    public static List<Order> getAllOrders(ConnectionPool connectionPool) throws DatabaseException {
-        //Delete this comment
+    public List<Order> getAllOrders(ConnectionPool connectionPool) throws DatabaseException {
 
         List<Order> orderList = new ArrayList<>();
         String sql = "SELECT * FROM orders inner join users using(user_id)";
@@ -46,7 +45,6 @@ public class OrderMapper {
         return orderList;
     }
 
-    //Needs method "getOrderItemsByOrderId"
     public static List<Order> getOrderItemsByOrderID(int id, ConnectionPool connectionPool) throws DatabaseException {
         List<Order> orderList = new ArrayList<>();
         String sql = "SELECT * FROM orders WHERE orders.order_id = ? inner join users using(user_id)";
@@ -79,9 +77,9 @@ public class OrderMapper {
         return orderList;
     }
 
-
-    //Needs method "insertOrder"
-    public static void insertOrder(Order order, ConnectionPool connectionPool) throws DatabaseException{
+    public Order insertOrder(Order order, ConnectionPool connectionPool) throws DatabaseException{
+        boolean result = false;
+        int newId = 0;
         String sql = "INSERT INTO orders (carport_width, carport_length, status, user_id) VALUES (?, ?, ?, ?)";
 
         try(
@@ -92,19 +90,26 @@ public class OrderMapper {
             ps.setInt(2, order.getCarportLength());
             ps.setInt(3, order.getOrderStatusId());
             ps.setInt(4, order.getUser().getUserId());
-            int updatedTable = ps.executeUpdate();
-            if (updatedTable >= 1){
-                System.out.println("Inserted Order Successfully");
-            } else {
-                System.out.println("Inserted Order Failed");
+
+            int rowsAffected = ps.executeUpdate();
+            if (rowsAffected == 1){
+                result = true;
             }
 
+            ResultSet idResultset = ps.getGeneratedKeys();
+            if (idResultset.next()){
+                newId = idResultset.getInt(1);
+                order.setOrderId(newId);
+            } else {
+                order = null;
+            }
         }catch(SQLException e) {
             throw new DatabaseException(e.getMessage());
         }
+
+        return order;
     }
 
-    //Needs method "insertOrderItems"
     public static void insertOrderItem(OrderItem orderItem, ConnectionPool connectionPool) throws DatabaseException{
         String sql = "INSERT INTO orders (order_id, product_variant, quantity, description) VALUES (?, ?, ?, ?)";
 
@@ -112,16 +117,11 @@ public class OrderMapper {
                 Connection connection = connectionPool.getConnection();
                 PreparedStatement ps = connection.prepareStatement(sql);
 
-        ){ ps.setInt(1, orderItem.getOrder().getOrderId()); //TODO: Find how to get order_id
+        ){ ps.setInt(1, orderItem.getOrder().getOrderId());
             ps.setInt(2, orderItem.getProductVariant().getProductVariantId());
             ps.setInt(3, orderItem.getQuantity());
             ps.setString(4, orderItem.getDescription());
-            int updatedTable = ps.executeUpdate();
-            if (updatedTable >= 1){
-                System.out.println("Inserted Order Successfully");
-            } else {
-                System.out.println("Inserted Order Failed");
-            }
+            ps.executeUpdate();
 
         }catch(SQLException e) {
             throw new DatabaseException(e.getMessage());

@@ -49,7 +49,6 @@ public class UserMapper {
                 int userID = rs.getInt("user_id");
                 String email = rs.getString("email");
                 String password = rs.getString("password");
-                String phonenumber = rs.getString("phone");
                 String role = rs.getString("role");
                 User user = new User(userID, email, password, role);
                 users.add(user);
@@ -72,7 +71,6 @@ public class UserMapper {
                 ){
             ps.setString(1, user.getUsername());
             ps.setString(2, user.getPassword());
-           // ps.setString(3, ); //TODO: We need phone number
             ps.setString(3, user.getRole());
 
             int rowsAffected = ps.executeUpdate();
@@ -93,22 +91,23 @@ public class UserMapper {
         return user;
     }
 
-    public void deleteUser(User user, ConnectionPool connectionPool) throws DatabaseException {
+    public boolean deleteUser(int userId, ConnectionPool connectionPool) throws DatabaseException, SQLException {
+        boolean result = false;
         String sql = "DELETE FROM users WHERE user_id = ?";
 
         try(
-                Connection connection = connectionPool.getConnection();
-                PreparedStatement ps = connection.prepareStatement(sql);
-                ){
-            ps.setInt(1, user.getUserId());
-            int affectedTable = ps.executeUpdate();
-            if (affectedTable > 0){
-                System.out.println("User " + user.getUsername() + " deleted successfully");
-            } else {
-                System.out.println("User " + user.getUsername() + " could not be deleted");
+                Connection connection = connectionPool.getConnection()) {
+            try (PreparedStatement ps = connection.prepareStatement(sql)) {
+                ps.setInt(1, userId);
+                int rowsAffected = ps.executeUpdate();
+                if (rowsAffected == 1) {
+                    result = true;
+                }
+            } catch (SQLException ex) {
+                ex.printStackTrace();
             }
-        }catch (SQLException ex){
-            ex.printStackTrace();
         }
+        return result;
     }
+
 }

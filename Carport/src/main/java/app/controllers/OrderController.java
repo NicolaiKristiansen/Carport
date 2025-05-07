@@ -1,5 +1,5 @@
 package app.controllers;
-
+/*
 import app.entities.Order;
 import app.entities.OrderItem;
 import app.exceptions.DatabaseException;
@@ -10,8 +10,10 @@ import io.javalin.http.Context;
 
 import java.util.List;
 
-public class OrderController {
+ */
 
+public class OrderController {
+/*
     private static void sendRequest(Context ctx, ConnectionPool connectionPool) {
         Order order = new Order(0, status, width, length, totalprice, user);
 
@@ -59,4 +61,6 @@ public class OrderController {
             throw new RuntimeException(e);
         }
     }
+
+ */
 }

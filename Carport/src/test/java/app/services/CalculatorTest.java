@@ -20,9 +20,29 @@ class CalculatorTest {
 
     }
 
+    //grænseværdianalyse
     @Test
     void calcPostQuantity() {
         Calculator calculator = new Calculator(600, 780, connectionPool);
-        assertEquals(6, calculator.calcPostQuantity());
+        int expected = 6;
+        int actual = calculator.calcPostQuantity();
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void calcBeamQuantity() {
+        Calculator calculator = new Calculator(600, 780, connectionPool);
+        int expected = 6;
+        int actual = calculator.calcBeamQuantity();
+        assertEquals(expected, actual);
+    }
+
+
+    @Test
+    void calcRafterQuantity() {
+        Calculator calculator = new Calculator(600, 780, connectionPool);
+        int expected = 13;
+        int actual = calculator.calcRafterQuantity();
+        assertEquals(expected, actual);
     }
 }

@@ -15,8 +15,8 @@ public class ProductMapper {
     public static List<ProductVariant> getVariantByProductIdAndMinLength(int minLength, int productId, ConnectionPool connectionPool){
         List<ProductVariant> productVariants = new ArrayList<>();
         String sql = "SELECT * FROM product_variant" +
-                "INNER JOIN product p USING(product_id)" +
-                "WHERE product_id = ? ANd length >= ?";
+                " INNER JOIN product p USING(product_id)" +
+                " WHERE product_id = ? AND length >= ?";
         try
                 (
                         Connection connection = connectionPool.getConnection()

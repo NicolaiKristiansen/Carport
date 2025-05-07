@@ -29,12 +29,11 @@ public class Calculator {
         this.connectionPool = connectionPool;
     }
 
+    //Fulde stykliste
     public void calcCarport(Order order) throws DatabaseException {
-
         calcPost(order);
         calcBeams(order);
         calcRafters(order);
-
     }
 
     //Stolper
@@ -42,7 +41,7 @@ public class Calculator {
         //Antal stolper
         int quantity = calcPostQuantity();
         //TODO: Make a function for calculating the amount of posts
-        //Længde på stopler - dvs variant
+        //Længde på stolper - dvs variant
         List<ProductVariant> productVariants = ProductMapper.getVariantByProductIdAndMinLength(0 ,POST, connectionPool);
         ProductVariant productVariant = productVariants.get(0);
         OrderItem orderItem = new OrderItem(0, order, productVariant, quantity, "Stolper nedgraves 90 cm ned i jorden");
@@ -50,19 +49,38 @@ public class Calculator {
     }
 
     public int calcPostQuantity(){
-        int quantity = 2 * (2 + length - 130 / 340);
-        return quantity;
-
+        return 2 * (2 + (length - 130) / 340);
     }
+
     //Remmer
     private void calcBeams(Order order) {
+        int quantity = calcPostQuantity();
 
+        List<ProductVariant> productVariants = ProductMapper.getVariantByProductIdAndMinLength(0 ,BEAM, connectionPool);
+        ProductVariant productVariant = productVariants.get(0);
+        OrderItem orderItem = new OrderItem(0, order, productVariant, quantity, "Remme tekst");
+        orderItems.add(orderItem);
     }
+
+    public int calcBeamQuantity() {
+        return 2 * (2 + (length - 130) / 340);
+    }
+
     //Spær
     private void calcRafters(Order order) {
+        int quantity = calcPostQuantity();
 
+        List<ProductVariant> productVariants = ProductMapper.getVariantByProductIdAndMinLength(0 ,RAFTER, connectionPool);
+        ProductVariant productVariant = productVariants.get(0);
+        OrderItem orderItem = new OrderItem(0, order, productVariant, quantity, "Spær tekst");
+        orderItems.add(orderItem);
     }
 
+    public int calcRafterQuantity(){
+        return (int) Math.round(length / 59.5);
+    }
+
+    //Styklisten består af alle orderitems i denne liste
     public List<OrderItem> getOrderItems() {
         return orderItems;
     }

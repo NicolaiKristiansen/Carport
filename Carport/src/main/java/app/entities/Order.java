@@ -1,5 +1,7 @@
 package app.entities;
 
+import app.persistence.ConnectionPool;
+
 public class Order {
     private int orderId;
     private int orderStatusId;
@@ -16,6 +18,16 @@ public class Order {
         this.totalPrice = totalPrice;
         this.user = user;
     }
+
+    public Order(int orderStatusId, int carportWidth, int carportLength, int totalPrice, User user) {
+        this.orderStatusId = orderStatusId;
+        this.carportWidth = carportWidth;
+        this.carportLength = carportLength;
+        this.totalPrice = totalPrice;
+        this.user = user;
+    }
+
+
 
     public int getOrderId() {
         return orderId;
