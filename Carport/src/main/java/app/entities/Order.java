@@ -2,6 +2,8 @@ package app.entities;
 
 import app.persistence.ConnectionPool;
 
+import java.util.Objects;
+
 public class Order {
     private int orderId;
     private int orderStatusId;
@@ -87,5 +89,17 @@ public class Order {
                 ", totalPrice=" + totalPrice +
                 ", user=" + user +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Order order = (Order) o;
+        return orderId == order.orderId && orderStatusId == order.orderStatusId && carportWidth == order.carportWidth && carportLength == order.carportLength && totalPrice == order.totalPrice && Objects.equals(user, order.user);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(orderId, orderStatusId, carportWidth, carportLength, totalPrice, user);
     }
 }

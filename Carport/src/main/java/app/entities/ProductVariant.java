@@ -1,5 +1,7 @@
 package app.entities;
 
+import java.util.Objects;
+
 public class ProductVariant {
     private int productVariantId;
     private Product product;
@@ -42,5 +44,17 @@ public class ProductVariant {
                 ", product=" + product +
                 ", length=" + length +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        ProductVariant that = (ProductVariant) o;
+        return productVariantId == that.productVariantId && length == that.length && Objects.equals(product, that.product);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(productVariantId, product, length);
     }
 }

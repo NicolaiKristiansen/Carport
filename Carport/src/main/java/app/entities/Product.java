@@ -1,5 +1,7 @@
 package app.entities;
 
+import java.util.Objects;
+
 public class Product {
     private int productId;
     private String productName;
@@ -53,5 +55,17 @@ public class Product {
                 ", unit='" + unit + '\'' +
                 ", price=" + price +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Product product = (Product) o;
+        return productId == product.productId && price == product.price && Objects.equals(productName, product.productName) && Objects.equals(unit, product.unit);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(productId, productName, unit, price);
     }
 }
