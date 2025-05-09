@@ -17,7 +17,7 @@
 
     public class IndexController {
         private static UserController userController = new UserController();
-
+//comment
         private static String universalStyle = "stroke:black; fill:white";
         //Delete later
         private static User user = new User("Nicolai", "Password", "customer");
