@@ -28,7 +28,7 @@ public class Main {
     private static final ConnectionPool connectionPool = ConnectionPool.getInstance(USER, PASSWORD, URL, DB);
 
     public static void main(String[] args) throws DatabaseException, SQLException {
-        //Message to commit and updateee
+        //Message to commit and updateeee
 
         Javalin app = Javalin.create(config -> {
             config.staticFiles.add("/public");
