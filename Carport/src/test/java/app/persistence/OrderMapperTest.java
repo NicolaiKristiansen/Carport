@@ -59,7 +59,7 @@ class OrderMapperTest {
                 stmt.execute("DELETE FROM test.users");
 
                 stmt.execute("INSERT INTO test.users (user_id, email, password, role, phone, address) " +
-                        "VALUES  (1, 'jon', '1234', 'customer', '12345678', 'Lyngbygade'), (2, 'benny', '1234', 'admin', '12345678', 'Lyngbygade')");
+                        "VALUES  (1, 'Nicolai', '1234', 'customer', '12345678', 'Lyngbygade'), (2, 'Sofus', '1234', 'admin', '12345678', 'Lyngbygade')");
 
                 stmt.execute("INSERT INTO test.orders (order_id, carport_width, carport_length, status, total_price, user_id) " +
                         "VALUES (1, 600, 780, 1, 15000, 1), (2, 540, 700, 2, 20000, 2), (3, 480, 600, 1,25000, 1)") ;
@@ -93,7 +93,7 @@ class OrderMapperTest {
     {
         try
         {
-            User user = new User(1, "jon", "1234", "customer", "12345678","Lyngbygade");
+            User user = new User(1, "Nicolai", "1234", "customer", "12345678","Lyngbygade");
             Order expected = new Order(1, 1, 600, 780, 15000, user);
             Order dbOrder = OrderMapper.getOrderById(1, connectionPool);
             assertEquals(expected, dbOrder);
@@ -108,7 +108,7 @@ class OrderMapperTest {
     void insertOrder() {
         try
         {
-            User user = new User(1, "jon", "1234", "customer", "12345678","Lyngbygade");
+            User user = new User(1, "Nicolai", "1234", "customer", "12345678","Lyngbygade");
             Order newOrder = new Order(2, 550, 750, 20000, user);
             newOrder = OrderMapper.insertOrder(newOrder, connectionPool);
             Order dbOrder = OrderMapper.getOrderById(newOrder.getOrderId(), connectionPool);

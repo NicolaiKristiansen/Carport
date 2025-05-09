@@ -3,7 +3,7 @@ package app.controllers;
 import app.entities.User;
 import app.exceptions.DatabaseException;
 import app.persistence.ConnectionPool;
-import app.persistence.StatusPageMapper;
+
 import app.persistence.UserMapper;
 import io.javalin.http.Context;
 

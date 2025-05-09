@@ -6,7 +6,7 @@ import app.entities.User;
 import app.exceptions.DatabaseException;
 import app.persistence.ConnectionPool;
 import app.persistence.OrderMapper;
-import app.persistence.StatusPageMapper;
+
 import app.persistence.UserMapper;
 import app.services.Calculator;
 import io.javalin.Javalin;
@@ -37,7 +37,7 @@ public class Main {
         }).start(7070);
 
         // Routing
-        StatusPageMapper statusPageMapper = new StatusPageMapper();
+
         IndexController indexController = new IndexController();
         indexController.addRoutes(app, connectionPool);
         //statusPageMapper.addRoutes(app);

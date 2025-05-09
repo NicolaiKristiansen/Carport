@@ -1,10 +1,10 @@
     package app.controllers;
 
-    import app.entities.CustomerOrders;
+
     import app.entities.Order;
     import app.entities.User;
     import app.persistence.ConnectionPool;
-    import app.persistence.StatusPageMapper;
+
     import app.services.Calculator;
     import app.services.SVG;
     import io.javalin.Javalin;
@@ -13,14 +13,14 @@
     import java.util.ArrayList;
     import java.util.List;
 
-    import static app.persistence.StatusPageMapper.statuspage;
+
 
     public class IndexController {
         private static UserController userController = new UserController();
 //comment
         private static String universalStyle = "stroke:black; fill:white";
         //Delete later
-        private static User user = new User("Nicolai", "Password", "customer");
+        private static User user = new User("Nicolai", "Password", "customer", "+45 66 66 66 66", "Buckingham Palace 5");
         private static Order order = new Order(1, 900, 700, 1000, user);
 
 
@@ -38,10 +38,8 @@
         }
 
         public static void statuspage(Context ctx){
-            List<CustomerOrders> orders = new ArrayList<>();
-            orders.add(new CustomerOrders(700, 500, 1, 1000, 1));
-            System.out.println(orders);
-            ctx.attribute("orders", orders);
+
+            //add an attribute
             ctx.render("statusPage.html");
 
         }
