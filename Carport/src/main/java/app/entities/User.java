@@ -1,23 +1,46 @@
 package app.entities;
 
+import java.util.Objects;
+
 public class User {
     private int userId;
-    private String username;
+    private String email;
     private String password;
     private String role;
+    private String phone;
+    private String address;
 
-    public User(int userId, String username, String password, String role) {
+    public User(int userId, String email, String password, String role, String phone, String address) {
         this.userId = userId;
-        this.username = username;
+        this.email = email;
         this.password = password;
         this.role = role;
+        this.phone = phone;
+        this.address = address;
     }
 
-    //When entering a new User the id will be auto generated so we don't need to make it when
-    public User(String username, String password, String role) {
-        this.username = username;
+    public User(String email, String password, String role, String phone, String address) {
+        this.email = email;
         this.password = password;
         this.role = role;
+        this.phone = phone;
+        this.address = address;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     public int getUserId() {
@@ -28,12 +51,12 @@ public class User {
         this.userId = userId;
     }
 
-    public String getUsername() {
-        return username;
+    public String getEmail() {
+        return email;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getPassword() {
@@ -56,9 +79,23 @@ public class User {
     public String toString() {
         return "User{" +
                 "userId=" + userId +
-                ", username='" + username + '\'' +
+                ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 ", role='" + role + '\'' +
+                ", phone='" + phone + '\'' +
+                ", address='" + address + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return userId == user.userId && Objects.equals(email, user.email) && Objects.equals(password, user.password) && Objects.equals(role, user.role) && Objects.equals(phone, user.phone) && Objects.equals(address, user.address);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(userId, email, password, role, phone, address);
     }
 }

@@ -13,8 +13,10 @@ public class UserController {
     public void createAccount(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
         String email = ctx.formParam("email");
         String password = ctx.formParam("password");
-        String role = "user";
-        User user = new User(email, password, role);
+        String role = "Customer";
+        String phone = ctx.formParam("phone");
+        String address = ctx.formParam("address");
+        User user = new User(email, password, role, phone, address);
         userMapper.insertUser(user, connectionPool);
         ctx.render("loginPage.html");
     }

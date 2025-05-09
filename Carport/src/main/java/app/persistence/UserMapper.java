@@ -50,7 +50,9 @@ public class UserMapper {
                 String email = rs.getString("email");
                 String password = rs.getString("password");
                 String role = rs.getString("role");
-                User user = new User(userID, email, password, role);
+                String phone = rs.getString("phone");
+                String address = rs.getString("address");
+                User user = new User(userID, email, password, role, phone, address);
                 users.add(user);
             }
         } catch (SQLException e) {
@@ -63,15 +65,17 @@ public class UserMapper {
     public User insertUser(User user, ConnectionPool connectionPool) throws DatabaseException {
         boolean result = false;
         int newId = 0;
-        String sql = "INSERT INTO users (email, password, role) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO users (email, password, role, phone, address) VALUES (?, ?, ?, ?, ?)";
         try(
                 Connection connection = connectionPool.getConnection();
                 PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
                 ){
-            ps.setString(1, user.getUsername());
+            ps.setString(1, user.getEmail());
             ps.setString(2, user.getPassword());
             ps.setString(3, user.getRole());
+            ps.setString(4, user.getPhone());
+            ps.setString(5, user.getAddress());
 
             int rowsAffected = ps.executeUpdate();
             if (rowsAffected == 1){
