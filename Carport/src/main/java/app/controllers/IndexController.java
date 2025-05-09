@@ -19,6 +19,7 @@
         private static UserController userController = new UserController();
 //comment
         private static String universalStyle = "stroke:black; fill:white";
+        private static String arrowStyle = "stroke:black; marker-start: url(#beginArrow); marker-end: url(#endArrow);";
         //Delete later
         private static User user = new User("Nicolai", "Password", "customer", "+45 66 66 66 66", "Buckingham Palace 5");
         private static Order order = new Order(1, 900, 700, 1000, user);
@@ -26,7 +27,7 @@
 
 
         public static void addRoutes(Javalin app, ConnectionPool connectionPool){
-            app.get("/", ctx -> ctx.render("frontPage.html"));
+            app.get("/", ctx -> ctx.render("customer/frontPage.html"));
             app.get("/login", ctx -> ctx.render("loginPage.html"));
             app.post("/login", ctx -> userController.login(ctx, connectionPool));
             app.get("/createAccount", ctx -> ctx.render("createAccountPage.html"));
@@ -52,7 +53,9 @@
             makeRafter(order, calculator, svg);
             makeBeams(order, calculator, svg);
             makePost(order, calculator, svg);
-            svg.addSvg(svg);
+
+
+
 
             ctx.attribute("sketch", svg);
             ctx.render("SVGLearning.html");
@@ -73,10 +76,28 @@
 
                 if(beamsQuantity == 2){
                     svg.addRectangle(x, y-15, 30, totalX, universalStyle);
+                    svg.addLine(x, y, totalX, y, arrowStyle);
+                    if(y == 20) {
+                        //Line not appearing
+                        svg.addLine(x + 20, y, x + 20, totalY - 20, arrowStyle);
+
+                    }
                 } else if(beamsQuantity == 4){
                     int midpoint = totalX/2;
                     svg.addRectangle(x, y-15, 30, midpoint, universalStyle);
                     svg.addRectangle(midpoint, y-15, 30, midpoint, universalStyle);
+
+                    svg.addLine(x, y, midpoint, y, arrowStyle);
+                    svg.addLine(midpoint, y, totalX, y, arrowStyle);
+
+                    svg.addText(x + (midpoint/2), y-10, 0, String.valueOf(totalX/2) + "cm");
+                    svg.addText(x + midpoint + (midpoint/2), y-10, 0, String.valueOf(totalX/2) + "cm");
+
+                    if(y == 20) {
+                        svg.addLine(x + 20, y, x + 20, totalY - 20, arrowStyle);
+                        int beamToBeam = (totalY-20)-y;
+                        svg.addText(x+10, (totalY-20)/2, -90, String.valueOf(beamToBeam) + "cm");
+                    }
                 }
 
             }
@@ -94,6 +115,10 @@
                 //They all just need to start at y = 0
                 int x = (i + 1) * gapBetweenRafters;
                 svg.addRectangle(x-10, y, totalY, 20, universalStyle);
+                svg.addLine(x, totalY/2,x+gapBetweenRafters, totalY/2, arrowStyle );
+                svg.addText(x+(gapBetweenRafters/2), totalY/2, 0, String.valueOf(gapBetweenRafters + "cm"));
+                svg.addLine(totalX-20, 0, totalX-20, totalY, arrowStyle);
+                svg.addText(totalX-20, totalY/2, -90, String.valueOf(totalY) + "cm");
             }
         }
 
@@ -105,12 +130,16 @@
             int postAmountPerSide = postQuantity / 2;
             int gapBetween = totalX/(postAmountPerSide + 2);
             for (int i = 0; i < 2; i++) {
-                //Shorter version of a if statment. Short Hand if... else (https://www.w3schools.com/java/java_conditions_shorthand.asp)
+                //Shorter version of an if statment. Short Hand if... else (https://www.w3schools.com/java/java_conditions_shorthand.asp)
                 y = (i == 0) ? 20: totalY - 20;
                 for (int j = 0; j < postAmountPerSide; j++) {
 
                     int x = (j + 1) * gapBetween;
                     svg.addRectangle(x-20, y-20, 40, 40, universalStyle);
+
+                    svg.addLine(x, y+20, x+gapBetween, y+20, arrowStyle);
+                    svg.addText(x + (gapBetween / 2), y + 20, 0, String.valueOf(gapBetween) + "cm");
+
                 }
             }
         }
