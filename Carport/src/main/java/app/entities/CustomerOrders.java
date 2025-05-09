@@ -25,6 +25,7 @@ public class CustomerOrders {
     }
 
     public double getWidth() {
+
         return width;
     }
 

@@ -32,7 +32,7 @@ class CalculatorTest {
     @Test
     void calcBeamQuantity() {
         Calculator calculator = new Calculator(600, 780, connectionPool);
-        int expected = 6;
+        int expected = 4;
         int actual = calculator.calcBeamQuantity();
         assertEquals(expected, actual);
     }

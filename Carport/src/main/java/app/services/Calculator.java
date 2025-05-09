@@ -63,7 +63,12 @@ public class Calculator {
     }
 
     public int calcBeamQuantity() {
-        return 2 * (2 + (length - 130) / 340);
+        if(length > 600){
+            return 4;
+        }
+        else {
+            return 2;}
+
     }
 
     //Spær
