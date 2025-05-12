@@ -1,9 +1,6 @@
 package app.services;
 
 public class SVG {
-    //Commit comment
-    //Comment
-    private int something;
     private static final String SVG_TEMPLATE = "<svg x=\"%d\"\n" +
             "         y=\"%d\"\n" +
             "         width=\"%s\"\n" +
@@ -81,5 +78,7 @@ public class SVG {
     public String toString(){
         return svg.append("</svg>").toString();
     }
+
+
 }
 
