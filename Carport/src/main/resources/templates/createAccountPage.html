@@ -13,21 +13,24 @@
 
 <div class="enterfield">
     <form method="post">
-    <p>Venligst indsæt din email</p>
-    <input type="text">
-    <p>Venligst indtast dit kodeord</p>
-    <input type="password">
-    <p>Venligst gentag dit kodeord</p>
-    <input type="password2">
+        <p>Indtast email</p>
+        <input type="text" name="email">
+        <p>Indtast kodeord</p>
+        <input type="password" name="password">
+        <p>Gentag kodeord</p>
+        <input type="password" name="password2">
+        <p>Indtast telefonnummer</p>
+        <input type="text" name="phone">
+        <p>Indtast addresse</p>
+        <input type="text" name="address">
+
     <br>
     <br>
-    <button type="submit" formaction="/createAccount">Skab konto</button>
+    <button type="submit" formaction="/createAccount">Opret profil</button>
     </form>
     <br>
     <br>
-    <a href="/login">Log ind, hvis du har en konto</a>
-
+    <a href="/login">Log ind</a>
 </div>
-
 </body>
 </html>

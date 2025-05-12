@@ -1,5 +1,6 @@
 package app.persistence;
 
+import app.PasswordUtil;
 import app.entities.User;
 import app.exceptions.DatabaseException;
 
@@ -9,31 +10,36 @@ import java.util.ArrayList;
 public class UserMapper {
 
 
-    public static User login(String username, String password, ConnectionPool connectionPool) {
-        String sql = "select * from users WHERE email = ? and password = ?";
+    public static User login(String email, String password, ConnectionPool connectionPool) throws DatabaseException {
+        String sql = "SELECT * FROM users WHERE email = ?";
 
-        try(
+        try (
                 Connection connection = connectionPool.getConnection();
-                PreparedStatement preparedStatement = connection.prepareStatement(sql);
-
-                ) {
-            preparedStatement.setString(1, username);
-            preparedStatement.setString(2, password);
-
+                PreparedStatement preparedStatement = connection.prepareStatement(sql)
+        ) {
+            preparedStatement.setString(1, email);
             ResultSet resultSet = preparedStatement.executeQuery();
-            while(resultSet.next()) {
-                String existingUsername = resultSet.getString("username");
-                if (username.equals(existingUsername)){
-                    String existingPassword = resultSet.getString("password");
-                    if (password.equals(existingPassword)){
-                        System.out.println("Successfully logged on");
-                    }
+
+            if (resultSet.next()) {
+                int id = resultSet.getInt("user_id");
+                String userEmail = resultSet.getString("email");
+                String hashedPassword = resultSet.getString("password");
+                String userRole = resultSet.getString("role");
+                String userPhone = resultSet.getString("phone");
+                String userAddress = resultSet.getString("address");
+
+                if (PasswordUtil.checkPassword(password, hashedPassword)) {
+                    System.out.println("Login system works");
+                    return new User(id, userEmail, hashedPassword, userRole, userPhone, userAddress);
+                } else {
+                    throw new DatabaseException("Incorrect password");
                 }
+            } else {
+                throw new DatabaseException("User not found");
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("Database error: " + e.getMessage(), e);
         }
-        return null;
     }
 
     public ArrayList<User> getAllUsers(ConnectionPool connectionPool) throws DatabaseException {
@@ -62,7 +68,7 @@ public class UserMapper {
     }
     //It worked
 
-    public User insertUser(User user, ConnectionPool connectionPool) throws DatabaseException {
+    public static void insertUser(User user, ConnectionPool connectionPool) throws DatabaseException {
         boolean result = false;
         int newId = 0;
         String sql = "INSERT INTO users (email, password, role, phone, address) VALUES (?, ?, ?, ?, ?)";
@@ -92,7 +98,6 @@ public class UserMapper {
             ex.printStackTrace();
         }
 
-        return user;
     }
 
     public boolean deleteUser(int userId, ConnectionPool connectionPool) throws DatabaseException, SQLException {

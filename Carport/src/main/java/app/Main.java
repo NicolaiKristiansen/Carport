@@ -1,6 +1,7 @@
 package app;
 
 import app.controllers.IndexController;
+import app.controllers.UserController;
 import app.entities.Order;
 import app.entities.User;
 import app.exceptions.DatabaseException;
@@ -37,10 +38,7 @@ public class Main {
         }).start(7070);
 
         // Routing
-
-        IndexController indexController = new IndexController();
-        indexController.addRoutes(app, connectionPool);
-        //statusPageMapper.addRoutes(app);
-
+        UserController.addRoutes(app, connectionPool);
+        IndexController.addRoutes(app, connectionPool);
     }
 }

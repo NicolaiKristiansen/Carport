@@ -12,6 +12,9 @@ public class ThymeleafConfig
         templateResolver.setPrefix("templates/"); // assuming templates are in resources/templates/
         templateResolver.setSuffix(".html");
         templateEngine.setTemplateResolver(templateResolver);
+
+
+
         return templateEngine;
     }
 }
