@@ -31,15 +31,15 @@ public class UserController {
             try {
                 UserMapper.insertUser(user, connectionPool);
                 ctx.attribute("message", "Du er hermed oprettet med email " + email + "." + " Nu skal du logge på.");
-                ctx.render("loginPage.html");
+                ctx.render("loginpage.html");
             } catch (DatabaseException e) {
                 ctx.attribute("message", "Dit brugernavn findes allerede, Prøv igen, eller log ind");
-                ctx.render("createAccountPage.html");
+                ctx.render("createaccountpage.html");
             }
 
         } else {
             ctx.attribute("message", "Dine to passwords matcher ikke! Prøv igen");
-            ctx.render("createAccountPage.html");
+            ctx.render("createaccountpage.html");
         }
 
     }
@@ -52,13 +52,13 @@ public class UserController {
             user = UserMapper.login(email, password, connectionPool);
             ctx.sessionAttribute("currentUser", user);
             switch (user.getRole()) {
-                case "Customer" -> ctx.redirect("frontPage.html");
-                case "Seller" -> ctx.render("listOfQuery.html");
+                case "Customer" -> ctx.redirect("frontpage.html");
+                case "Seller" -> ctx.render("listofquery.html");
                 case "Admin" -> ctx.render("empty.html");
             }
         } catch (DatabaseException e) {
             ctx.attribute("message", e.getMessage());
-            ctx.render("loginPage.html");
+            ctx.render("loginpage.html");
         }
     }
 
