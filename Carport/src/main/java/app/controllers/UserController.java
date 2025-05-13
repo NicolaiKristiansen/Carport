@@ -65,7 +65,7 @@ public class UserController {
             ctx.sessionAttribute("currentUser", user);
             switch (user.getRole()) {
                 case "Customer" -> ctx.redirect("/");
-                case "Seller" -> ctx.render("listofquery.html");
+                case "Seller" -> ctx.render("/listofquery.html");
                 case "Admin" -> ctx.render("empty.html");
                 case "default" -> ctx.render("/login");
             }
