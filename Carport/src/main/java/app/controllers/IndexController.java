@@ -67,7 +67,7 @@
                 int result = OrderMapper.updateOrder(integerPrice, integerOrderID, connectionPool);
                 if(result == 1){
                     ctx.attribute("message", "The orders total price has now been updated");
-                    ctx.render("listofquary.html");
+                    ctx.render("listofquery.html");
                 } else if (result == 0) {
                     ctx.attribute("message", "Something went wrong. The update was not carried out");
 
