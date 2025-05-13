@@ -11,8 +11,37 @@
     <h1>Alle kunders forespørgsler</h1>
 </div>
 
-<table>
+<table class="table">
+    <thead class="table">
 
+    <tr class="table">
+        <th>Telefon nummer</th>
+        <th>Bredde</th>
+        <th>Længde</th>
+        <th>OrderId</th>
+    </tr>
+
+    </thead>
+    <tbody class="table">
+    <form action="seller/partslistevaluation" method="post">
+        <tr class="table" th:each="order : ${customerQuaryInformation}">
+            <td th:text="${order.phoneNumber}"></td>
+            <td th:text="${order.width}"></td>
+            <td th:text="${order.length}"></td>
+            <td th:text="${order.id}"></td>
+            <td>
+                <form action="partslistevaluation" method="post">
+                <input type="hidden" name="phoneNumber" th:value="${order.phoneNumber}"/>
+                <input type="hidden" name="width" th:value="${order.width}"/>
+                <input type="hidden" name="length" th:value="${order.length}"/>
+                <input type="hidden" name="OrderID" th:value="${order.id}"/>
+                <button type="submit" >Skab stykliste og lav tilbud</button>
+                </form>
+            </td>
+
+        </tr>
+    </form>
+    </tbody>
 </table>
 
 </body>

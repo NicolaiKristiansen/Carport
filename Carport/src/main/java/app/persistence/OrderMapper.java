@@ -163,5 +163,30 @@ public class OrderMapper {
             throw new DatabaseException(e.getMessage());
         }
     }
+
+    public static int updateOrder(int newPrice, int orderId, ConnectionPool connectionPool) throws DatabaseException{
+        String sql = "UPDATE orders SET total_price = ? WHERE order_id = ?";
+
+        try(
+                Connection connection = connectionPool.getConnection();
+                PreparedStatement ps = connection.prepareStatement(sql);
+                ){
+            ps.setInt(1, newPrice);
+            ps.setInt(2, orderId);
+            int update = ps.executeUpdate();
+
+            if(update == 1){
+                System.out.println(update);
+                return update;
+            } else if (update == 0) {
+                System.out.println(update);
+                return update;
+            }
+
+        } catch (SQLException exception){
+            exception.printStackTrace();
+        }
+        return 0;
+    }
 }
 

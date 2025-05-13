@@ -15,11 +15,9 @@
     <thead class="table">
 
     <tr class="table">
-        <th>Navn</th>
-        <th>Længde</th>
+        <th>Produkt Variant Id</th>
         <th>Mængde</th>
         <th>Beskrivelse</th>
-        <th>Matriale Pris</th>
     </tr>
 
     </thead>
@@ -27,19 +25,20 @@
     <!-- Loop through orders for each order -->
 
         <tr class="table" th:each="part : ${parts}">
-            <td th:text="${part.name}"></td>
-            <td th:text="${part.length}"></td>
-            <td th:text="${part.amount}"></td>
+            <td th:text="${part.productVariant.productVariantId}"></td>
+            <td th:text="${part.quantity}"></td>
             <td th:text="${part.description}"></td>
-            <td th:text="${part.priceForLength}"></td>
         </tr>
 
     </tbody>
 </table>
 <label>Den totale pris for alle matrialer</label>
-<p th:text="totalPrice"></p>
+<p th:text="${order.totalprice}"></p>
     <label>Indtast prisen som du og kunden har aftalt</label>
-    <input  type="submit">
+    <input type="hidden" name="orderID" th:value="${order.orderId}">
+
+    <input type="text" name="price" required><br><br>
+    <input type="submit" value="Opdater Pris">
 </form>
 </body>
 </html>

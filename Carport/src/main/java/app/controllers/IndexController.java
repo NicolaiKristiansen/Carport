@@ -2,9 +2,12 @@
 
 
     import app.entities.Order;
+    import app.entities.OrderItem;
     import app.entities.User;
+    import app.exceptions.DatabaseException;
     import app.persistence.ConnectionPool;
 
+    import app.persistence.OrderMapper;
     import app.services.Calculator;
     import app.services.SVG;
     import io.javalin.Javalin;
@@ -22,7 +25,7 @@
         private static String arrowStyle = "stroke:black; marker-start: url(#beginArrow); marker-end: url(#endArrow);";
         //Delete later
         private static User user = new User("Nicolai", "Password", "customer", "+45 66 66 66 66", "Buckingham Palace 5");
-        private static Order order = new Order(1, 600, 700, 1000, user);
+        private static Order orderTest = new Order(1, 600, 700, 1000, user);
 
 
 
@@ -34,8 +37,11 @@
             app.post("/createAccount", ctx -> userController.createAccount(ctx, connectionPool));
             app.get("/status", ctx -> statuspage(ctx));
             app.post("/status", ctx -> statuspage(ctx));
+            app.get("/partlistevaluation", ctx -> partslistevaluation(ctx, connectionPool));
+            app.post("/partslistevaluation", ctx  -> partslistevaluation(ctx, connectionPool));
+            app.get("/listofquery", ctx -> listofquery(ctx, connectionPool));
             //Delete Later
-            app.get("/SVG", ctx -> makeSVG(order, ctx, connectionPool));
+            app.get("/SVG", ctx -> makeSVG(orderTest, ctx, connectionPool));
         }
 
         public static void statuspage(Context ctx){
@@ -43,6 +49,40 @@
             //add an attribute
             ctx.render("statusPage.html");
 
+        }
+
+        public static void partslistevaluation(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
+            //TODO: Test later
+            if(ctx.method().equals("GET")) {
+                int id = Integer.parseInt(ctx.formParam("OrderID"));
+                Order order = OrderMapper.getOrderById(id, connectionPool);
+                Calculator calculator = new Calculator(order.getCarportWidth(), order.getCarportLength(), connectionPool);
+                calculator.calcCarport(order);
+                List<OrderItem> parts = calculator.getOrderItems();
+                ctx.attribute("parts", parts);
+                ctx.attribute("order", order);
+                ctx.render("partslistevaluation.html");
+            } else if (ctx.method().equals("POST")) {
+                String price = ctx.formParam("price");
+                String orderID = ctx.formParam("orderID");
+                int integerPrice = Integer.parseInt(price);
+                int integerOrderID = Integer.parseInt(orderID);
+                int result = OrderMapper.updateOrder(integerPrice, integerOrderID, connectionPool);
+                if(result == 1){
+                    ctx.attribute("message", "The orders total price has now been updated");
+                    ctx.render("listofquary.html");
+                } else if (result == 0) {
+                    ctx.attribute("message", "Something went wrong. The update was not carried out");
+
+                }
+            }
+
+        }
+
+        public static void listofquery(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
+            List<Order> orders = OrderMapper.getAllOrders(connectionPool);
+            ctx.attribute("orders", orders);
+            ctx.render("customerQuaryInformation.html");
         }
 
         public static void makeSVG(Order order, Context ctx, ConnectionPool connectionPool){
@@ -53,8 +93,6 @@
             makeRafter(order, calculator, svg);
             makeBeams(order, calculator, svg);
             makePost(order, calculator, svg);
-
-
 
 
             ctx.attribute("sketch", svg);
@@ -103,25 +141,6 @@
             }
 
         }
-
-        /*
-        private static void makeRafter(Order order, Calculator calculator, SVG svg){
-            int totalY = order.getCarportLength();
-            int totalX = order.getCarportWidth();
-            int y = 0;
-            int rafterQuantity = calculator.calcRafterQuantity();
-            int gapBetweenRafters = totalX/(rafterQuantity + 2);
-
-            for (int i = 0; i < rafterQuantity; i++) {
-                //They all just need to start at y = 0
-                int x = (i + 1) * gapBetweenRafters;
-                svg.addRectangle(x-10, y, totalY, 20, universalStyle);
-                svg.addLine(x, totalY/2,x+gapBetweenRafters, totalY/2, arrowStyle );
-                svg.addText(x+(gapBetweenRafters/2), totalY/2, 0, String.valueOf(gapBetweenRafters + "cm"));
-                svg.addLine(totalX-20, 0, totalX-20, totalY, arrowStyle);
-                svg.addText(totalX-20, totalY/2, -90, String.valueOf(totalY) + "cm");
-            }
-        }*/
 
         private static void makeRafter(Order order, Calculator calculator, SVG svg){
             int totalX = order.getCarportLength();
