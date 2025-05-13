@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Query</title>
+    <link href="../public/css/login.css" th:href="@{/css/login.css}" rel="stylesheet"/>
+</head>
+<body>
+<div class="headerbar">
+    <img class="logo" th:src="@{/images/Fog_logo.png}">
+    <h1>Opret forespørgsel</h1>
+</div>
+<br>
+<br>
+
+<div class="login">
+    <form method="post" action="/frontPageHandle">
+        <p>Vælg Længde</p>
+        <select name="length">
+            <option>780</option>
+            <option>700</option>
+            <option>600</option>
+            <option>400</option>
+        </select>
+
+        <p>Vælg Bredde</p>
+        <select name="width">
+            <option>600</option>
+            <option>450</option>
+            <option>300</option>
+            <option>250</option>
+        </select>
+
+        <br><br>
+
+        <div th:if="${session.currentUser == null}">
+            <p>Du skal være logget ind for at indsende en forespørgsel!</p>
+            <button type="submit" disabled>Indsend forespørgsel</button>
+        </div>
+
+        <div th:if="${session.currentUser != null}">
+            <button type="submit">Indsend forespørgsel</button>
+        </div>
+    </form>
+
+</div>
+
+
+
+</body>
+</html>

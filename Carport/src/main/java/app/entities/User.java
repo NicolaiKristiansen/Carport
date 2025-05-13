@@ -27,6 +27,14 @@ public class User {
         this.address = address;
     }
 
+    public User(int userId, String email, String role, String phone, String address) {
+        this.userId = userId;
+        this.email = email;
+        this.role = role;
+        this.phone = phone;
+        this.address = address;
+    }
+
     public String getAddress() {
         return address;
     }

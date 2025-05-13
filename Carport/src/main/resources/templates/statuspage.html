@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Status</title>
-    <link href="../../public/css/statuspage.css" th:href="@{/css/statuspage.css}" rel="stylesheet"/>
+    <link href="../public/css/statuspage.css" th:href="@{/css/statuspage.css}" rel="stylesheet"/>
 </head>
 <body>
 <div class="headerbar">
@@ -29,13 +29,13 @@
     </thead>
     <tbody class="table">
     <!-- Loop through orders for each order -->
-    <form action="/status page" method="post">
+    <form action="/status" method="post">
     <tr class="table" th:each="order : ${orders}">
-        <td th:text="${order.length}"></td>  <!-- Display length -->
-        <td th:text="${order.width}"></td> <!-- Display width -->
-        <td th:text="${order.id}"></td>  <!-- Display id -->
-        <td th:text="${order.price}"></td>  <!-- Display price -->
-        <td th:text="${order.status}"></td>  <!-- Display status -->
+        <td th:text="${order.carportLength}"></td>  <!-- Display length -->
+        <td th:text="${order.carportWidth}"></td> <!-- Display width -->
+        <td th:text="${order.orderId}"></td>  <!-- Display id -->
+        <td th:text="${order.totalPrice}"></td>  <!-- Display price -->
+        <td th:text="${order.orderStatusId}"></td>  <!-- Display status -->
         <td> <button type="submit">Køb</button></td>
 
     </tr>

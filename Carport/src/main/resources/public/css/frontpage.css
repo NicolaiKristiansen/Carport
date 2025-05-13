@@ -52,7 +52,7 @@ body {
     max-width: 100%; /* Make it responsive */
 }
 
-.customCarport p {
+.customCarport button {
     color: white;
     border: 2px solid dodgerblue; /* Add solid border */
     border-radius: 20px;
