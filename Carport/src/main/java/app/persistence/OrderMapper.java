@@ -11,15 +11,19 @@ import java.util.List;
 
 public class OrderMapper {
 
-    public static List<Order> getAllOrders(ConnectionPool connectionPool) throws DatabaseException {
+    public static List<Order> getAllOrders(User user, ConnectionPool connectionPool) throws DatabaseException {
 
         List<Order> orderList = new ArrayList<>();
-        String sql = "SELECT * FROM orders inner join users using(user_id)";
+        String sql = "SELECT users.user_id, users.email, users.password, users.role, users. phone, users.address, \n" +
+                "order_id, orders.carport_width, orders.carport_length, orders.status, orders.total_price\n" +
+                "FROM orders JOIN users ON orders.user_id = users.user_id \n" +
+                "WHERE orders.user_id = ?";
         try (
                 Connection connection = connectionPool.getConnection();
                 PreparedStatement preparedStatement = connection.prepareStatement(sql);
-                ResultSet resultSet = preparedStatement.executeQuery();
         ) {
+            preparedStatement.setInt(1, user.getUserId());
+            ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()){
                 int userId = resultSet.getInt("user_id");
                 String username = resultSet.getString("email");
@@ -32,8 +36,8 @@ public class OrderMapper {
                 int carportLength = resultSet.getInt("carport_length");
                 int status = resultSet.getInt("status");
                 int totalPrice = resultSet.getInt("total_price");
-                User user = new User(userId, username, password, role, phone, address);
-                Order order = new Order(orderId, status, carportWidth, carportLength, totalPrice, user);
+                User user1 = new User(userId, username, password, role, phone, address);
+                Order order = new Order(orderId, status, carportWidth, carportLength, totalPrice, user1);
                 orderList.add(order);
 
             }
@@ -111,7 +115,7 @@ public class OrderMapper {
         return orderList;
     }
 
-    public static Order insertOrder(Order order, ConnectionPool connectionPool) throws DatabaseException{
+    public static void insertOrder(Order order, ConnectionPool connectionPool) throws DatabaseException{
         boolean result = false;
         int newId = 0;
         String sql = "INSERT INTO orders (carport_width, carport_length, status, total_price, user_id) VALUES (?, ?, ?, ?, ?)";
@@ -142,8 +146,6 @@ public class OrderMapper {
         }catch(SQLException e) {
             throw new DatabaseException(e.getMessage());
         }
-
-        return order;
     }
 
     public static void insertOrderItem(OrderItem orderItem, ConnectionPool connectionPool) throws DatabaseException{

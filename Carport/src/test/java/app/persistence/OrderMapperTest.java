@@ -110,7 +110,7 @@ class OrderMapperTest {
         {
             User user = new User(1, "Nicolai", "1234", "customer", "12345678","Lyngbygade");
             Order newOrder = new Order(2, 550, 750, 20000, user);
-            newOrder = OrderMapper.insertOrder(newOrder, connectionPool);
+            OrderMapper.insertOrder(newOrder, connectionPool);
             Order dbOrder = OrderMapper.getOrderById(newOrder.getOrderId(), connectionPool);
             assertEquals(newOrder, dbOrder);
         }

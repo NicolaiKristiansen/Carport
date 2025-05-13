@@ -31,6 +31,7 @@ public class Main {
     public static void main(String[] args) throws DatabaseException, SQLException {
         //Message to commit and updateeeee
 
+
         Javalin app = Javalin.create(config -> {
             config.staticFiles.add("/public");
             config.jetty.modifyServletContextHandler(handler ->  handler.setSessionHandler(SessionConfig.sessionConfig()));
@@ -40,5 +41,7 @@ public class Main {
         // Routing
         UserController.addRoutes(app, connectionPool);
         IndexController.addRoutes(app, connectionPool);
+
+
     }
 }

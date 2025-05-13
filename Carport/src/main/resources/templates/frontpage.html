@@ -18,8 +18,13 @@
         <th><button type="submit">El og belysning</button></th>
         </thead>
     </table>
-
+    <div th:if="${session.currentUser == null}">
         <a href="/login"><button>Log ind</button></a>
+    </div>
+    <div th:if="${session.currentUser != null}">
+        <a href="/status"><button>Status</button></a>
+        <a href="/logout"><button>Log ud</button></a>
+    </div>
 
 </div>
 
@@ -28,7 +33,7 @@
 
 <div class="customCarport">
 <img th:src="@{/images/Placeholder.png}" alt="Carport Image">
-<p>Lav dine egen carport med dine specifik mål</p>
+<a href="/createquery"><button>Lav din carport</button></a>
 </div>
 
 <p class="line"></p>
