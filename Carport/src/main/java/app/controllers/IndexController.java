@@ -12,6 +12,7 @@
     import app.services.SVG;
     import io.javalin.Javalin;
     import io.javalin.http.Context;
+    import io.javalin.http.HandlerType;
 
     import java.util.ArrayList;
     import java.util.List;
@@ -20,17 +21,15 @@
 
     public class IndexController {
         private static UserController userController = new UserController();
-//comment
         private static String universalStyle = "stroke:black; fill:white";
         private static String arrowStyle = "stroke:black; marker-start: url(#beginArrow); marker-end: url(#endArrow);";
-        //Delete later
-        static User user;
+
 
 
         public static void addRoutes(Javalin app, ConnectionPool connectionPool){
             app.get("/status", ctx -> statuspage(ctx, connectionPool));
             app.post("/status", ctx -> statuspage(ctx, connectionPool));
-            app.get("/partlistevaluation", ctx -> partslistevaluation(ctx, connectionPool));
+            app.get("/partslistevaluation", ctx -> partslistevaluation(ctx, connectionPool));
             app.post("/partslistevaluation", ctx  -> partslistevaluation(ctx, connectionPool));
             app.get("/listofquery", ctx -> listofquery(ctx, connectionPool));
             //Delete Later
@@ -50,8 +49,8 @@
 
         public static void partslistevaluation(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
             //TODO: Test later
-            if(ctx.method().equals("GET")) {
-                int id = Integer.parseInt(ctx.formParam("OrderID"));
+            if(ctx.method() == HandlerType.GET) {
+                int id = Integer.parseInt(ctx.queryParam("OrderID"));
                 Order order = OrderMapper.getOrderById(id, connectionPool);
                 Calculator calculator = new Calculator(order.getCarportWidth(), order.getCarportLength(), connectionPool);
                 calculator.calcCarport(order);
@@ -59,7 +58,7 @@
                 ctx.attribute("parts", parts);
                 ctx.attribute("order", order);
                 ctx.render("partslistevaluation.html");
-            } else if (ctx.method().equals("POST")) {
+            } else if (ctx.method() == HandlerType.POST) {
                 String price = ctx.formParam("price");
                 String orderID = ctx.formParam("orderID");
                 int integerPrice = Integer.parseInt(price);
@@ -67,7 +66,7 @@
                 int result = OrderMapper.updateOrder(integerPrice, integerOrderID, connectionPool);
                 if(result == 1){
                     ctx.attribute("message", "The orders total price has now been updated");
-                    ctx.render("listofquery.html");
+                    ctx.redirect("/listofquery");
                 } else if (result == 0) {
                     ctx.attribute("message", "Something went wrong. The update was not carried out");
 
@@ -78,8 +77,8 @@
 
         public static void listofquery(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
             List<Order> orders = OrderMapper.getAllOrders(connectionPool);
-            ctx.attribute("orders", orders);
-            ctx.render("customerQuaryInformation.html");
+            ctx.attribute("customerQuaryInformation", orders);
+            ctx.render("listofquery.html");
         }
 
         public static void makeSVG(Order order, Context ctx, ConnectionPool connectionPool){

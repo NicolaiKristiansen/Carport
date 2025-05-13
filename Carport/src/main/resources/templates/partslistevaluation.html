@@ -10,7 +10,7 @@
     <img class="logo" th:src="@{/images/Fog_logo.png}">
     <h1>Stykliste</h1>
 </div>
-<form action="/agreedPrice" method="post">
+
 <table class="table">
     <thead class="table">
 
@@ -33,6 +33,7 @@
     </tbody>
 </table>
 <label>Den totale pris for alle matrialer</label>
+<form action="/partslistevaluation" method="post">
 <p th:text="${order.totalprice}"></p>
     <label>Indtast prisen som du og kunden har aftalt</label>
     <input type="hidden" name="orderID" th:value="${order.orderId}">
