@@ -11,7 +11,7 @@ import java.util.List;
 
 public class OrderMapper {
 
-    public static List<Order> getAllOrders(User user, ConnectionPool connectionPool) throws DatabaseException {
+    public static List<Order> getAllOrdersForUser(User user, ConnectionPool connectionPool) throws DatabaseException {
 
         List<Order> orderList = new ArrayList<>();
         String sql = "SELECT users.user_id, users.email, users.password, users.role, users. phone, users.address, \n" +
@@ -24,6 +24,43 @@ public class OrderMapper {
         ) {
             preparedStatement.setInt(1, user.getUserId());
             ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()){
+                int userId = resultSet.getInt("user_id");
+                String username = resultSet.getString("email");
+                String password = resultSet.getString("password");
+                String role = resultSet.getString("role");
+                String phone = resultSet.getString("phone");
+                String address = resultSet.getString("address");
+                int orderId = resultSet.getInt("order_id");
+                int carportWidth = resultSet.getInt("carport_width");
+                int carportLength = resultSet.getInt("carport_length");
+                int status = resultSet.getInt("status");
+                int totalPrice = resultSet.getInt("total_price");
+                User user1 = new User(userId, username, password, role, phone, address);
+                Order order = new Order(orderId, status, carportWidth, carportLength, totalPrice, user1);
+                orderList.add(order);
+
+            }
+
+        } catch (SQLException e) {
+            throw new DatabaseException(e.getMessage());
+        }
+        return orderList;
+    }
+
+    public static List<Order> getAllOrders(ConnectionPool connectionPool) throws DatabaseException {
+
+        List<Order> orderList = new ArrayList<>();
+        String sql = "SELECT users.user_id, users.email, users.password, users.role, users. phone, users.address, \n" +
+                "order_id, orders.carport_width, orders.carport_length, orders.status, orders.total_price\n" +
+                "FROM orders JOIN users ON orders.user_id = users.user_id \n";
+
+        try (
+                Connection connection = connectionPool.getConnection();
+                PreparedStatement preparedStatement = connection.prepareStatement(sql);
+                ResultSet resultSet = preparedStatement.executeQuery();
+        ) {
+
             while (resultSet.next()){
                 int userId = resultSet.getInt("user_id");
                 String username = resultSet.getString("email");

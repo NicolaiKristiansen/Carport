@@ -24,29 +24,26 @@
         private static String universalStyle = "stroke:black; fill:white";
         private static String arrowStyle = "stroke:black; marker-start: url(#beginArrow); marker-end: url(#endArrow);";
         //Delete later
-        private static User user = new User("Nicolai", "Password", "customer", "+45 66 66 66 66", "Buckingham Palace 5");
-        private static Order orderTest = new Order(1, 600, 700, 1000, user);
-
+        static User user;
 
 
         public static void addRoutes(Javalin app, ConnectionPool connectionPool){
-            app.get("/", ctx -> ctx.render("customer/frontPage.html"));
-            app.get("/login", ctx -> ctx.render("loginPage.html"));
-            app.post("/login", ctx -> userController.login(ctx, connectionPool));
-            app.get("/createAccount", ctx -> ctx.render("createAccountPage.html"));
-            app.post("/createAccount", ctx -> userController.createAccount(ctx, connectionPool));
-            app.get("/status", ctx -> statuspage(ctx));
-            app.post("/status", ctx -> statuspage(ctx));
+            app.get("/status", ctx -> statuspage(ctx, connectionPool));
+            app.post("/status", ctx -> statuspage(ctx, connectionPool));
             app.get("/partlistevaluation", ctx -> partslistevaluation(ctx, connectionPool));
             app.post("/partslistevaluation", ctx  -> partslistevaluation(ctx, connectionPool));
             app.get("/listofquery", ctx -> listofquery(ctx, connectionPool));
             //Delete Later
-            app.get("/SVG", ctx -> makeSVG(orderTest, ctx, connectionPool));
+           // app.get("/SVG", ctx -> makeSVG(orderTest, ctx, connectionPool));
         }
 
-        public static void statuspage(Context ctx){
+        public static void statuspage(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
 
             //add an attribute
+            User user = ctx.sessionAttribute("currentUser");
+
+            List<Order> order = OrderMapper.getAllOrdersForUser(user, connectionPool);
+            ctx.attribute("orders", order);
             ctx.render("statusPage.html");
 
         }
