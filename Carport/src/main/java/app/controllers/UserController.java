@@ -1,6 +1,6 @@
 package app.controllers;
 
-import app.PasswordUtil;
+import app.util.PasswordUtil;
 import app.entities.Order;
 import app.entities.User;
 import app.exceptions.DatabaseException;
