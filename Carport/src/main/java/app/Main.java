@@ -40,7 +40,7 @@ public class Main {
     public static void main(String[] args) {
         //Message to commit and updateeeee
 
-        /*
+        /* mail method
         MailUtil mailUtil = new MailUtil();
         mailUtil.sendMail("sofus@k7c.dk", "anders@and.dk", "1234");
          */
