@@ -14,8 +14,8 @@ public class Calculator {
 
     //Delete later
     private static final int POST = 1;
-    private static final int RAFTER = 2;
-    private static final int BEAM = 2;
+    private static final int RAFTER = 8;
+    private static final int BEAM = 4;
 
     public List<OrderItem> orderItems = new ArrayList<>();
 
@@ -54,7 +54,7 @@ public class Calculator {
 
     //Remmer
     private void calcBeams(Order order) {
-        int quantity = calcPostQuantity();
+        int quantity = calcBeamQuantity();
 
         List<ProductVariant> productVariants = ProductMapper.getVariantByProductIdAndMinLength(0 ,BEAM, connectionPool);
         ProductVariant productVariant = productVariants.get(0);
@@ -73,7 +73,7 @@ public class Calculator {
 
     //Spær
     private void calcRafters(Order order) {
-        int quantity = calcPostQuantity();
+        int quantity = calcRafterQuantity();
 
         List<ProductVariant> productVariants = ProductMapper.getVariantByProductIdAndMinLength(0 ,RAFTER, connectionPool);
         ProductVariant productVariant = productVariants.get(0);

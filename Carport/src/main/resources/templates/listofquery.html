@@ -6,10 +6,16 @@
     <link href="../public/css/statuspage.css" th:href="@{/css/statuspage.css}" rel="stylesheet"/>
 </head>
 <body>
+<div th:if="${meassage}">
+    <p th:text="${message}"></p>
+</div>
 <div class="headerbar">
     <img class="logo" th:src="@{/images/Fog_logo.png}">
     <h1>Alle kunders forespørgsler</h1>
 </div>
+<br>
+<br>
+<br>
 
 <table class="table">
     <thead class="table">
@@ -23,7 +29,8 @@
 
     </thead>
     <tbody class="table">
-        <tr class="table" th:each="order : ${customerQuaryInformation}">
+        <tr class="table" th:each="order : ${customerQueryInformation}">
+            <td th:text="${order.user.email}"></td>
             <td th:text="${order.user.phone}"></td>
             <td th:text="${order.carportWidth}"></td>
             <td th:text="${order.carportLength}"></td>
