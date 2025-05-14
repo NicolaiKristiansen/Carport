@@ -72,7 +72,6 @@
 
                 }
             }
-
         }
 
         public static void listofquery(Context ctx, ConnectionPool connectionPool) throws DatabaseException {

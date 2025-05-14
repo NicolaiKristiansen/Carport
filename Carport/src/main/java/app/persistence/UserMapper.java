@@ -1,6 +1,6 @@
 package app.persistence;
 
-import app.PasswordUtil;
+import app.util.PasswordUtil;
 import app.entities.User;
 import app.exceptions.DatabaseException;
 
