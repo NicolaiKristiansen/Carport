@@ -38,10 +38,9 @@ public class Calculator {
 
     //Stolper
     private void calcPost(Order order) throws DatabaseException {
-        //Antal stolper
         int quantity = calcPostQuantity();
-        //TODO: Make a function for calculating the amount of posts
-        //Længde på stolper - dvs variant
+        int price = calcPostPrice();
+
         List<ProductVariant> productVariants = ProductMapper.getVariantByProductIdAndMinLength(0 ,POST, connectionPool);
         ProductVariant productVariant = productVariants.get(0);
         OrderItem orderItem = new OrderItem(0, order, productVariant, quantity, "Stolper nedgraves 90 cm ned i jorden");
@@ -52,9 +51,14 @@ public class Calculator {
         return 2 * (2 + (length - 130) / 340);
     }
 
+    public int calcPostPrice() {
+        return 0;
+    }
+
     //Remmer
     private void calcBeams(Order order) {
-        int quantity = calcPostQuantity();
+        int quantity = calcBeamQuantity();
+        int price = calcBeamPrice();
 
         List<ProductVariant> productVariants = ProductMapper.getVariantByProductIdAndMinLength(0 ,BEAM, connectionPool);
         ProductVariant productVariant = productVariants.get(0);
@@ -71,9 +75,16 @@ public class Calculator {
 
     }
 
+    public int calcBeamPrice() {
+        return 0;
+    }
+
     //Spær
     private void calcRafters(Order order) {
-        int quantity = calcPostQuantity();
+        int quantity = calcRafterQuantity();
+        int price = calcRafterPrice();
+
+
 
         List<ProductVariant> productVariants = ProductMapper.getVariantByProductIdAndMinLength(0 ,RAFTER, connectionPool);
         ProductVariant productVariant = productVariants.get(0);
@@ -83,6 +94,10 @@ public class Calculator {
 
     public int calcRafterQuantity(){
         return (int) Math.round(length / 59.5);
+    }
+
+    public int calcRafterPrice() {
+        return 0;
     }
 
     //Styklisten består af alle orderitems i denne liste

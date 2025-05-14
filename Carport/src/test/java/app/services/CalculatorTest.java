@@ -45,4 +45,19 @@ class CalculatorTest {
         int actual = calculator.calcRafterQuantity();
         assertEquals(expected, actual);
     }
+
+    @Test
+    void calcPostPrice() {
+
+    }
+
+    @Test
+    void calcBeamPrice() {
+
+    }
+
+    @Test
+    void calcRafterPrice() {
+
+    }
 }
