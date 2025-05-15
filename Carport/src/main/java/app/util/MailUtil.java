@@ -12,7 +12,7 @@ import java.io.IOException;
 
 public class MailUtil {
 
-    public boolean sendMail(String to, String email,  String password) throws IOException {
+    public boolean sendMail(String to, String email,  String password  /*, String svg*/) throws IOException {
         // Erstat xyx@gmail.com med din egen email, som er afsender
         Email from = new Email("sofus@k7c.dk");
         from.setName("Johannes Fog Byggemarked");
@@ -29,6 +29,7 @@ public class MailUtil {
         personalization.addTo(new Email(to));
         personalization.addDynamicTemplateData("email", email);
         personalization.addDynamicTemplateData("password", password);
+        //personalization.addDynamicTemplateData("SVG", svg);
         mail.addPersonalization(personalization);
 
         mail.addCategory("carportapp");
