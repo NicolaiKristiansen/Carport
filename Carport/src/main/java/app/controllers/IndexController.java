@@ -30,13 +30,12 @@
 
 
 
-        public static void addRoutes(Javalin app, ConnectionPool connectionPool) throws DatabaseException {
+        public static void addRoutes(Javalin app, ConnectionPool connectionPool) {
             app.get("/status", ctx -> statuspage(ctx, connectionPool));
             app.post("/status", ctx -> statuspage(ctx, connectionPool));
             app.get("/partslistevaluation", ctx -> partslistevaluation(ctx, connectionPool));
             app.post("/partslistevaluation", ctx  -> partslistevaluation(ctx, connectionPool));
             app.get("/listofquery", ctx -> listofquery(ctx, connectionPool));
-            //Delete Later
 
            app.get("/SVG", ctx -> makeSVG(order, ctx, connectionPool));
         }
