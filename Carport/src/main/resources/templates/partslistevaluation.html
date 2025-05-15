@@ -40,8 +40,12 @@
 <label>Den totale pris for alle matrialer</label>
 <form action="/partslistevaluation" method="post">
 <p th:text="${order.totalprice}"></p>
+
+    <p>Her er en tegning af carporten</p>
+    <div th:utext="${sketch}"></div>
+
     <label>Indtast prisen som du og kunden har aftalt</label>
-    <input type="hidden" name="orderID" th:value="${order.orderId}">
+    <input type="hidden" name="orderId" th:value="${order.orderId}">
 
     <input type="text" name="price" required><br><br>
     <input type="submit" value="Opdater Pris">

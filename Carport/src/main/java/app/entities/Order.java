@@ -32,13 +32,7 @@ public class Order {
         this.user = user;
     }
 
-    public SVG getSvg() {
-        return svg;
-    }
 
-    public void setSvg(SVG svg) {
-        this.svg = svg;
-    }
 
     public int getOrderId() {
         return orderId;
@@ -86,6 +80,14 @@ public class Order {
 
     public void setTotalPrice(int totalPrice) {
         this.totalPrice = totalPrice;
+    }
+
+    public SVG getSvg() {
+        return svg;
+    }
+
+    public void setSvg(SVG svg) {
+        this.svg = svg;
     }
 
     @Override

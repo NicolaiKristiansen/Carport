@@ -26,8 +26,8 @@
         private static String universalStyle = "stroke:black; fill:white";
         private static String arrowStyle = "stroke:black; marker-start: url(#beginArrow); marker-end: url(#endArrow);";
 
-        private static User user = new User("Nicolai", "password", "Customer", "+45 77 66 44 33", "vej");
-        private static Order order = new Order(2, 900, 900, 1000, user);
+
+
 
 
 
@@ -39,7 +39,7 @@
             app.post("/partslistevaluation", ctx  -> partslistevaluation(ctx, connectionPool));
             app.get("/listofquery", ctx -> listofquery(ctx, connectionPool));
 
-           app.get("/SVG", ctx -> makeSVG(order, ctx, connectionPool));
+           app.get("/SVG", ctx -> makeSVG(ctx, connectionPool));
         }
 
         public static void statuspage(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
@@ -54,23 +54,36 @@
         }
 
         public static void boughtcarport(Context ctx, ConnectionPool connectionPool) throws IOException, DatabaseException {
-            int id = Integer.parseInt(ctx.queryParam("orderID"));
+
+
+            int id = Integer.parseInt(ctx.formParam("orderId"));
             System.out.println(id);
             Order order = OrderMapper.getOrderById(id, connectionPool);
+
+            Calculator calculator = new Calculator(order.getCarportWidth(), order.getCarportLength(), connectionPool);
+            SVG svg = new SVG(0, 0, "0 0 900 900", "900", "900");
+
+            makeRafter(order, calculator, svg);
+            makeBeams(order, calculator, svg);
+            makePost(order, calculator, svg);
+
+            order.setSvg(svg);
+
             String email = order.getUser().getEmail();
             String password = order.getUser().getPassword();
-            SVG svg = order.getSvg();
+            SVG svgForMail = order.getSvg();
+            System.out.println(email);
 
             MailUtil mailUtil = new MailUtil();
-            mailUtil.sendMail(email, email, password, svg);
+            mailUtil.sendMail(email, email, password, svgForMail);
 
-
+            ctx.render("frontpage.html");
         }
 
         public static void partslistevaluation(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
             //TODO: Test later
             if(ctx.method() == HandlerType.GET) {
-                int id = Integer.parseInt(ctx.queryParam("orderID"));
+                int id = Integer.parseInt(ctx.queryParam("orderId"));
                 Order order = OrderMapper.getOrderById(id, connectionPool);
                 Calculator calculator = new Calculator(order.getCarportWidth(), order.getCarportLength(), connectionPool);
                 calculator.calcCarport(order);
@@ -80,7 +93,7 @@
                 ctx.render("partslistevaluation.html");
             } else if (ctx.method() == HandlerType.POST) {
                 String price = ctx.formParam("price");
-                String orderID = ctx.formParam("orderID");
+                String orderID = ctx.formParam("orderId");
                 int integerPrice = Integer.parseInt(price);
                 int integerOrderID = Integer.parseInt(orderID);
                 int result = OrderMapper.updateOrder(integerPrice, 3, integerOrderID, connectionPool);
@@ -104,7 +117,9 @@
             ctx.render("listofquery.html");
         }
 
-        public static void makeSVG(Order order, Context ctx, ConnectionPool connectionPool){
+        public static void makeSVG(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
+            int id = Integer.parseInt(ctx.formParam("orderId"));
+            Order order = OrderMapper.getOrderById(id, connectionPool);
             Calculator calculator = new Calculator(order.getCarportWidth(), order.getCarportLength(), connectionPool);
             SVG svg = new SVG(0, 0, "0 0 900 900", "900", "900");
 

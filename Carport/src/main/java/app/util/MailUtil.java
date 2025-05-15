@@ -35,13 +35,13 @@ public class MailUtil {
         personalization.addTo(new Email(to));
         personalization.addDynamicTemplateData("email", email);
         personalization.addDynamicTemplateData("password", password);
-        //personalization.addDynamicTemplateData("SVG", svg);
         mail.addPersonalization(personalization);
 
         mail.addCategory("carportapp");
 
         try{
             String svgString = svg.toString();
+            System.out.println(svgString);
             ByteArrayOutputStream pngStream = SVGConverter.convertSvgToPng(svgString);
             String base64Image = Base64.getEncoder().encodeToString(pngStream.toByteArray());
 

@@ -28,23 +28,24 @@
 
     </thead>
     <tbody class="table">
-    <!-- Loop through orders for each order -->
-    <form action="/status" method="post">
     <tr class="table" th:each="order : ${orders}">
-        <td th:text="${order.carportLength}"></td>  <!-- Display length -->
-        <td th:text="${order.carportWidth}"></td> <!-- Display width -->
-        <td th:text="${order.orderId}"></td>  <!-- Display id -->
-        <td th:text="${order.totalPrice}"></td>  <!-- Display price -->
-        <td th:text="${order.orderStatusId}"></td>  <!-- Display status -->
-        <input type="hidden" name="orderID" th:value="${order.orderId}">
-        <!-- Only show "køb" when status id = 2 -->
-        <div th:if="${order.orderStatusId == 3}">
-            <td> <button type="submit">Køb</button></td>
-        </div>
-
+        <td th:text="${order.carportLength}"></td>
+        <td th:text="${order.carportWidth}"></td>
+        <td th:text="${order.orderId}"></td>
+        <td th:text="${order.totalPrice}"></td>
+        <td th:text="${order.orderStatusId}"></td>
+        <!-- Only show "køb" when status id = 3 -->
+        <td>
+            <div th:if="${order.orderStatusId == 3}">
+                <form action="/status" method="post">
+                    <input type="hidden" name="orderId" th:value="${order.orderId}" />
+                    <button type="submit">Køb</button>
+                </form>
+            </div>
+        </td>
     </tr>
-    </form>
     </tbody>
+
 </table>
 
 </body>

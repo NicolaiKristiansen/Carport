@@ -21,6 +21,7 @@
     <thead class="table">
 
     <tr class="table">
+        <th>Navn</th>
         <th>Telefon nummer</th>
         <th>Bredde</th>
         <th>Længde</th>
@@ -40,7 +41,7 @@
                 <input type="hidden" name="phoneNumber" th:value="${order.user.phone}"/>
                 <input type="hidden" name="width" th:value="${order.carportWidth}"/>
                 <input type="hidden" name="length" th:value="${order.carportLength}"/>
-                <input type="hidden" name="OrderID" th:value="${order.orderId}"/>
+                <input type="hidden" name="orderID" th:value="${order.orderId}"/>
                 <button type="submit" >Skab stykliste og lav tilbud</button>
                 </form>
             </td>

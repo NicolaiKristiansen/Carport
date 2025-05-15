@@ -1,12 +1,14 @@
 package app.services;
 
 public class SVG {
-    private static final String SVG_TEMPLATE = "<svg x=\"%d\"\n" +
+    private static final String SVG_TEMPLATE = "<svg xmlns=\"http://www.w3.org/2000/svg\"\n" +
+            "         x=\"%d\"\n" +
             "         y=\"%d\"\n" +
             "         width=\"%s\"\n" +
             "         height=\"%s\"\n" +
             "         viewBox=\"%s\"\n" +
             "         preserveAspectRatio=\"xMinYMin\">";
+
 
     private static final String SVG_ARROW_DEFS = "  <defs>\n" +
             "            <marker\n" +
