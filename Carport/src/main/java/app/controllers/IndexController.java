@@ -53,9 +53,16 @@
 
         }
 
-        public static void boughtcarport(Context ctx, ConnectionPool connectionPool) throws IOException {
+        public static void boughtcarport(Context ctx, ConnectionPool connectionPool) throws IOException, DatabaseException {
+            int id = Integer.parseInt(ctx.queryParam("orderID"));
+            System.out.println(id);
+            Order order = OrderMapper.getOrderById(id, connectionPool);
+            String email = order.getUser().getEmail();
+            String password = order.getUser().getPassword();
+            SVG svg = order.getSvg();
+
             MailUtil mailUtil = new MailUtil();
-            //mailUtil.sendMail(, , );
+            mailUtil.sendMail(email, email, password, svg);
 
 
         }
@@ -63,7 +70,7 @@
         public static void partslistevaluation(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
             //TODO: Test later
             if(ctx.method() == HandlerType.GET) {
-                int id = Integer.parseInt(ctx.queryParam("OrderID"));
+                int id = Integer.parseInt(ctx.queryParam("orderID"));
                 Order order = OrderMapper.getOrderById(id, connectionPool);
                 Calculator calculator = new Calculator(order.getCarportWidth(), order.getCarportLength(), connectionPool);
                 calculator.calcCarport(order);
@@ -89,6 +96,8 @@
             }
         }
 
+
+
         public static void listofquery(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
             List<Order> orders = OrderMapper.getAllOrders(connectionPool);
             ctx.attribute("customerQueryInformation", orders);
@@ -99,15 +108,12 @@
             Calculator calculator = new Calculator(order.getCarportWidth(), order.getCarportLength(), connectionPool);
             SVG svg = new SVG(0, 0, "0 0 900 900", "900", "900");
 
-
             makeRafter(order, calculator, svg);
             makeBeams(order, calculator, svg);
             makePost(order, calculator, svg);
 
-
+            order.setSvg(svg);
             ctx.attribute("sketch", svg);
-            ctx.render("SVGLearning.html");
-
         }
 
         private static void makeBeams(Order order, Calculator calculator, SVG svg){
