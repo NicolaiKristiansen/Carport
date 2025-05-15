@@ -41,7 +41,7 @@ public class Main {
         //Message to commit and updateeeeee
 
         // mail method
-        //MailUtil mailUtil = new MailUtil();
+        MailUtil mailUtil = new MailUtil();
         //mailUtil.sendMail("sofus@k7c.dk", "anders@and.dk", "1234");
 
 

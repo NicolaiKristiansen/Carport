@@ -1,18 +1,24 @@
 package app.util;
 
+import app.services.SVG;
+import app.services.SVGConverter;
 import com.sendgrid.Method;
 import com.sendgrid.Request;
 import com.sendgrid.Response;
 import com.sendgrid.SendGrid;
 import com.sendgrid.helpers.mail.Mail;
+import com.sendgrid.helpers.mail.objects.Attachments;
 import com.sendgrid.helpers.mail.objects.Email;
 import com.sendgrid.helpers.mail.objects.Personalization;
+import org.bouncycastle.util.encoders.Base64Encoder;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.Base64;
 
 public class MailUtil {
 
-    public boolean sendMail(String to, String email,  String password  /*, String svg*/) throws IOException {
+    public boolean sendMail(String to, String email,  String password, SVG svg) throws IOException {
         // Erstat xyx@gmail.com med din egen email, som er afsender
         Email from = new Email("sofus@k7c.dk");
         from.setName("Johannes Fog Byggemarked");
@@ -33,6 +39,23 @@ public class MailUtil {
         mail.addPersonalization(personalization);
 
         mail.addCategory("carportapp");
+
+        try{
+            String svgString = svg.toString();
+            ByteArrayOutputStream pngStream = SVGConverter.convertSvgToPng(svgString);
+            String base64Image = Base64.getEncoder().encodeToString(pngStream.toByteArray());
+
+            Attachments attachments = new Attachments();
+            attachments.setContent(base64Image);
+            attachments.setType("image/png");
+            attachments.setFilename("carportImage.png");
+            attachments.setDisposition("attachment");
+            mail.addAttachments(attachments);
+
+        } catch (Exception e){
+            System.out.println("Error when trying to convert the SVG to PNG: " + e.getMessage() );
+            return false;
+        }
 
         SendGrid sg = new SendGrid(API_KEY);
         Request request = new Request();

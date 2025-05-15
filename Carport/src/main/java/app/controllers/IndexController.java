@@ -61,6 +61,7 @@
                 List<OrderItem> parts = calculator.getOrderItems();
                 ctx.attribute("parts", parts);
                 ctx.attribute("order", order);
+                makeSVG(order, ctx, connectionPool);
                 ctx.render("partslistevaluation.html");
             } else if (ctx.method() == HandlerType.POST) {
                 String price = ctx.formParam("price");
@@ -90,15 +91,12 @@
             Calculator calculator = new Calculator(order.getCarportWidth(), order.getCarportLength(), connectionPool);
             SVG svg = new SVG(0, 0, "0 0 900 900", "900", "900");
 
-
             makeRafter(order, calculator, svg);
             makeBeams(order, calculator, svg);
             makePost(order, calculator, svg);
 
-
+            order.setSvg(svg);
             ctx.attribute("sketch", svg);
-            ctx.render("SVGLearning.html");
-
         }
 
         private static void makeBeams(Order order, Calculator calculator, SVG svg){

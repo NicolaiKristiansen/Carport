@@ -1,6 +1,7 @@
 package app.entities;
 
 import app.persistence.ConnectionPool;
+import app.services.SVG;
 
 import java.util.Objects;
 
@@ -11,6 +12,8 @@ public class Order {
     private int carportLength;
     private int totalPrice;
     private User user;
+
+    private SVG svg;
 
     public Order(int orderId, int orderStatusId, int carportWidth, int carportLength, int totalPrice, User user) {
         this.orderId = orderId;
@@ -77,6 +80,14 @@ public class Order {
 
     public void setTotalPrice(int totalPrice) {
         this.totalPrice = totalPrice;
+    }
+
+    public SVG getSvg() {
+        return svg;
+    }
+
+    public void setSvg(SVG svg) {
+        this.svg = svg;
     }
 
     @Override
