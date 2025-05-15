@@ -6,11 +6,16 @@
     <link href="../public/css/statuspage.css" th:href="@{/css/statuspage.css}" rel="stylesheet"/>
 </head>
 <body>
+<div th:if="${meassage}">
+    <p th:text="${message}"></p>
+</div>
 <div class="headerbar">
     <img class="logo" th:src="@{/images/Fog_logo.png}">
     <h1>Stykliste</h1>
 </div>
-
+<br>
+<br>
+<br>
 <table class="table">
     <thead class="table">
 

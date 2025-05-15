@@ -2,7 +2,6 @@ package app.services;
 
 import app.entities.Order;
 import app.entities.OrderItem;
-import app.entities.Product;
 import app.entities.ProductVariant;
 import app.exceptions.DatabaseException;
 import app.persistence.ConnectionPool;
@@ -14,12 +13,11 @@ import java.util.List;
 public class Calculator {
 
     //Delete later
-    private static final int POST = 11;
+    private static final int POST = 1;
     private static final int RAFTER = 8;
     private static final int BEAM = 4;
 
     public List<OrderItem> orderItems = new ArrayList<>();
-    public int totalPrice;
 
     private int width;
     private int length;
@@ -31,7 +29,6 @@ public class Calculator {
         this.connectionPool = connectionPool;
     }
 
-
     //Fulde stykliste
     public void calcCarport(Order order) throws DatabaseException {
         calcPost(order);
@@ -41,9 +38,10 @@ public class Calculator {
 
     //Stolper
     private void calcPost(Order order) throws DatabaseException {
+        //Antal stolper
         int quantity = calcPostQuantity();
-        totalPrice += calcPostPrice();
-
+        //TODO: Make a function for calculating the amount of posts
+        //Længde på stolper - dvs variant
         List<ProductVariant> productVariants = ProductMapper.getVariantByProductIdAndMinLength(0 ,POST, connectionPool);
         ProductVariant productVariant = productVariants.get(0);
         OrderItem orderItem = new OrderItem(0, order, productVariant, quantity, "Stolper nedgraves 90 cm ned i jorden");
@@ -54,21 +52,9 @@ public class Calculator {
         return 2 * (2 + (length - 130) / 340);
     }
 
-
-    public int calcPostPrice() throws DatabaseException {
-        int quantity = calcPostQuantity();
-        List<ProductVariant> productVariants = ProductMapper.getVariantByProductIdAndMinLength(0, POST, connectionPool);
-        ProductVariant productVariant = productVariants.get(0);
-        Product product = productVariant.getProduct();
-        int pricePerPost = product.getPrice();
-        int productLength = productVariant.getLength();
-        return (productLength * quantity) * pricePerPost;
-    }
-
     //Remmer
     private void calcBeams(Order order) {
         int quantity = calcBeamQuantity();
-        totalPrice += calcBeamPrice();
 
         List<ProductVariant> productVariants = ProductMapper.getVariantByProductIdAndMinLength(0 ,BEAM, connectionPool);
         ProductVariant productVariant = productVariants.get(0);
@@ -81,28 +67,13 @@ public class Calculator {
             return 4;
         }
         else {
-            return 2;
-        }
-    }
+            return 2;}
 
-    public int calcBeamPrice() {
-        int quantity = calcBeamQuantity();
-        int minLength = 0;
-        if(quantity > 3) {
-            minLength = 500;
-        }
-        List<ProductVariant> productVariants = ProductMapper.getVariantByProductIdAndMinLength(minLength, BEAM, connectionPool);
-        ProductVariant productVariant = productVariants.get(0);
-        Product product = productVariant.getProduct();
-        int pricePerBeam = product.getPrice();
-        int productLength = productVariant.getLength();
-        return (productLength * quantity) * pricePerBeam;
     }
 
     //Spær
     private void calcRafters(Order order) {
         int quantity = calcRafterQuantity();
-        totalPrice += calcRafterPrice();
 
         List<ProductVariant> productVariants = ProductMapper.getVariantByProductIdAndMinLength(0 ,RAFTER, connectionPool);
         ProductVariant productVariant = productVariants.get(0);
@@ -114,25 +85,8 @@ public class Calculator {
         return (int) Math.round(length / 59.5);
     }
 
-    public int calcRafterPrice() {
-        int quantity = calcRafterQuantity();
-        int minLength = 0;
-        if (length > 500) {
-            minLength = 500;
-        }
-        List<ProductVariant> productVariants = ProductMapper.getVariantByProductIdAndMinLength(minLength, RAFTER, connectionPool);
-        ProductVariant productVariant = productVariants.get(0);
-        Product product = productVariant.getProduct();
-        int pricePerRafter = product.getPrice();
-        int productLength = productVariant.getLength();
-        return (productLength * quantity) * pricePerRafter;
-    }
-
+    //Styklisten består af alle orderitems i denne liste
     public List<OrderItem> getOrderItems() {
         return orderItems;
-    }
-
-    public int getTotalPrice() {
-        return totalPrice;
     }
 }

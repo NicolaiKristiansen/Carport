@@ -203,15 +203,16 @@ public class OrderMapper {
         }
     }
 
-    public static int updateOrder(int newPrice, int orderId, ConnectionPool connectionPool) throws DatabaseException{
-        String sql = "UPDATE orders SET total_price = ? WHERE order_id = ?";
+    public static int updateOrder(int newPrice, int status, int orderId, ConnectionPool connectionPool) throws DatabaseException{
+        String sql = "UPDATE orders SET total_price = ?, status = ? WHERE order_id = ?";
 
         try(
                 Connection connection = connectionPool.getConnection();
                 PreparedStatement ps = connection.prepareStatement(sql);
                 ){
             ps.setInt(1, newPrice);
-            ps.setInt(2, orderId);
+            ps.setInt(2, status);
+            ps.setInt(3, orderId);
             int update = ps.executeUpdate();
 
             if(update == 1){
