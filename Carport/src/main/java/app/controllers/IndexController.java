@@ -10,10 +10,12 @@
     import app.persistence.OrderMapper;
     import app.services.Calculator;
     import app.services.SVG;
+    import app.util.MailUtil;
     import io.javalin.Javalin;
     import io.javalin.http.Context;
     import io.javalin.http.HandlerType;
 
+    import java.io.IOException;
     import java.util.ArrayList;
     import java.util.List;
 
@@ -32,7 +34,7 @@
 
         public static void addRoutes(Javalin app, ConnectionPool connectionPool) {
             app.get("/status", ctx -> statuspage(ctx, connectionPool));
-            app.post("/status", ctx -> statuspage(ctx, connectionPool));
+            app.post("/status", ctx -> boughtcarport(ctx, connectionPool));
             app.get("/partslistevaluation", ctx -> partslistevaluation(ctx, connectionPool));
             app.post("/partslistevaluation", ctx  -> partslistevaluation(ctx, connectionPool));
             app.get("/listofquery", ctx -> listofquery(ctx, connectionPool));
@@ -48,6 +50,13 @@
             List<Order> order = OrderMapper.getAllOrdersForUser(user, connectionPool);
             ctx.attribute("orders", order);
             ctx.render("statusPage.html");
+
+        }
+
+        public static void boughtcarport(Context ctx, ConnectionPool connectionPool) throws IOException {
+            MailUtil mailUtil = new MailUtil();
+            //mailUtil.sendMail(, , );
+
 
         }
 

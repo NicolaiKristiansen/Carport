@@ -37,7 +37,9 @@
         <td th:text="${order.totalPrice}"></td>  <!-- Display price -->
         <td th:text="${order.orderStatusId}"></td>  <!-- Display status -->
         <!-- Only show "køb" when status id = 2 -->
-        <td> <button type="submit">Køb</button></td>
+        <div th:if="${order.orderStatusId == 3}">
+            <td> <button type="submit">Køb</button></td>
+        </div>
 
     </tr>
     </form>
