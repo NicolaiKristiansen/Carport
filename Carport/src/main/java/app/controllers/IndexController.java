@@ -238,14 +238,4 @@
                 }
             }
         }
-
-
-
-        public static void SVGLearning(Context ctx){
-            SVG svg = new SVG(0,0,"0,0,850 600", "1000", "900");
-            svg.addText(20, 300, -90, "400cm" );
-            svg.addText(430, 750, 0, "300cm" );
-            ctx.attribute("sketch", svg);
-            ctx.render("SVGLearning.html");
-        }
     }
