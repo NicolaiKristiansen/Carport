@@ -2,6 +2,7 @@ package app.services;
 
 import app.entities.Order;
 import app.entities.OrderItem;
+import app.entities.Product;
 import app.entities.ProductVariant;
 import app.exceptions.DatabaseException;
 import app.persistence.ConnectionPool;
@@ -18,6 +19,7 @@ public class Calculator {
     private static final int BEAM = 4;
 
     public List<OrderItem> orderItems = new ArrayList<>();
+    public int totalPrice;
 
     private int width;
     private int length;
@@ -34,13 +36,14 @@ public class Calculator {
         calcPost(order);
         calcBeams(order);
         calcRafters(order);
+        order.setTotalPrice(totalPrice);
     }
 
     //Stolper
     private void calcPost(Order order) throws DatabaseException {
         //Antal stolper
         int quantity = calcPostQuantity();
-        //TODO: Make a function for calculating the amount of posts
+        totalPrice += calcPostPrice();
         //Længde på stolper - dvs variant
         List<ProductVariant> productVariants = ProductMapper.getVariantByProductIdAndMinLength(0 ,POST, connectionPool);
         ProductVariant productVariant = productVariants.get(0);
@@ -52,9 +55,21 @@ public class Calculator {
         return 2 * (2 + (length - 130) / 340);
     }
 
+    public int calcPostPrice() throws DatabaseException {
+        int quantity = calcPostQuantity();
+        List<ProductVariant> productVariants = ProductMapper.getVariantByProductIdAndMinLength(0, POST, connectionPool);
+        ProductVariant productVariant = productVariants.get(0);
+        Product product = productVariant.getProduct();
+        int pricePerPost = product.getPrice();
+        int productLength = productVariant.getLength();
+        return (productLength * quantity) * pricePerPost;
+    }
+
     //Remmer
     private void calcBeams(Order order) {
         int quantity = calcBeamQuantity();
+        totalPrice += calcBeamPrice();
+
 
         List<ProductVariant> productVariants = ProductMapper.getVariantByProductIdAndMinLength(0 ,BEAM, connectionPool);
         ProductVariant productVariant = productVariants.get(0);
@@ -71,9 +86,25 @@ public class Calculator {
 
     }
 
+    public int calcBeamPrice() {
+        int quantity = calcBeamQuantity();
+        int minLength = 0;
+        if(quantity > 3) {
+            minLength = 500;
+        }
+        List<ProductVariant> productVariants = ProductMapper.getVariantByProductIdAndMinLength(minLength, BEAM, connectionPool);
+        ProductVariant productVariant = productVariants.get(0);
+        Product product = productVariant.getProduct();
+        int pricePerBeam = product.getPrice();
+        int productLength = productVariant.getLength();
+        return (productLength * quantity) * pricePerBeam;
+    }
+
     //Spær
     private void calcRafters(Order order) {
         int quantity = calcRafterQuantity();
+        totalPrice += calcRafterPrice();
+
 
         List<ProductVariant> productVariants = ProductMapper.getVariantByProductIdAndMinLength(0 ,RAFTER, connectionPool);
         ProductVariant productVariant = productVariants.get(0);
@@ -85,8 +116,26 @@ public class Calculator {
         return (int) Math.round(length / 59.5);
     }
 
+    public int calcRafterPrice() {
+        int quantity = calcRafterQuantity();
+        int minLength = 0;
+        if (length > 500) {
+            minLength = 500;
+        }
+        List<ProductVariant> productVariants = ProductMapper.getVariantByProductIdAndMinLength(minLength, RAFTER, connectionPool);
+        ProductVariant productVariant = productVariants.get(0);
+        Product product = productVariant.getProduct();
+        int pricePerRafter = product.getPrice();
+        int productLength = productVariant.getLength();
+        return (productLength * quantity) * pricePerRafter;
+    }
+
     //Styklisten består af alle orderitems i denne liste
     public List<OrderItem> getOrderItems() {
         return orderItems;
+    }
+
+    public int getTotalPrice() {
+        return totalPrice;
     }
 }

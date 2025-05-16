@@ -38,8 +38,6 @@
             app.get("/partslistevaluation", ctx -> partslistevaluation(ctx, connectionPool));
             app.post("/partslistevaluation", ctx  -> partslistevaluation(ctx, connectionPool));
             app.get("/listofquery", ctx -> listofquery(ctx, connectionPool));
-
-           app.get("/SVG", ctx -> makeSVG(ctx, connectionPool));
         }
 
         public static void statuspage(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
@@ -77,17 +75,22 @@
             MailUtil mailUtil = new MailUtil();
             mailUtil.sendMail(email, email, password, svgForMail);
 
+            OrderMapper.updateOrder(order.getTotalPrice(), 4, order.getOrderId(), connectionPool);
+
             ctx.render("frontpage.html");
         }
 
         public static void partslistevaluation(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
             //TODO: Test later
             if(ctx.method() == HandlerType.GET) {
-                int id = Integer.parseInt(ctx.queryParam("orderId"));
+                int id = Integer.parseInt(ctx.queryParam("orderID"));
                 Order order = OrderMapper.getOrderById(id, connectionPool);
+                OrderMapper.updateOrder(order.getTotalPrice(), 2, id, connectionPool);
                 Calculator calculator = new Calculator(order.getCarportWidth(), order.getCarportLength(), connectionPool);
                 calculator.calcCarport(order);
                 List<OrderItem> parts = calculator.getOrderItems();
+                SVG svg = makeSVG(id, ctx, connectionPool);
+                order.setSvg(svg);
                 ctx.attribute("parts", parts);
                 ctx.attribute("order", order);
                 ctx.render("partslistevaluation.html");
@@ -117,8 +120,7 @@
             ctx.render("listofquery.html");
         }
 
-        public static void makeSVG(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
-            int id = Integer.parseInt(ctx.formParam("orderId"));
+        public static SVG makeSVG(int id,Context ctx, ConnectionPool connectionPool) throws DatabaseException {
             Order order = OrderMapper.getOrderById(id, connectionPool);
             Calculator calculator = new Calculator(order.getCarportWidth(), order.getCarportLength(), connectionPool);
             SVG svg = new SVG(0, 0, "0 0 900 900", "900", "900");
@@ -127,8 +129,7 @@
             makeBeams(order, calculator, svg);
             makePost(order, calculator, svg);
 
-            order.setSvg(svg);
-            ctx.attribute("sketch", svg);
+            return svg;
         }
 
         private static void makeBeams(Order order, Calculator calculator, SVG svg){
