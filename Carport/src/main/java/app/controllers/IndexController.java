@@ -59,6 +59,7 @@
             Order order = OrderMapper.getOrderById(id, connectionPool);
 
             Calculator calculator = new Calculator(order.getCarportWidth(), order.getCarportLength(), connectionPool);
+            calculator.calcCarport(order);
             SVG svg = new SVG(0, 0, "0 0 900 900", "900", "900");
 
             makeRafter(order, calculator, svg);
@@ -70,10 +71,13 @@
             String email = order.getUser().getEmail();
             String password = order.getUser().getPassword();
             SVG svgForMail = order.getSvg();
-            System.out.println(email);
+
+
+            List<OrderItem> partslist = calculator.getOrderItems();
+            System.out.println("In boughtcarport: " + partslist);
 
             MailUtil mailUtil = new MailUtil();
-            mailUtil.sendMail(email, email, password, svgForMail);
+            mailUtil.sendMail(email, email, password, svgForMail, partslist );
 
             OrderMapper.updateOrder(order.getTotalPrice(), 4, order.getOrderId(), connectionPool);
 
@@ -92,6 +96,9 @@
                 SVG svg = makeSVG(id, ctx, connectionPool);
                 order.setSvg(svg);
                 ctx.attribute("parts", parts);
+
+                System.out.println(parts);
+
                 ctx.attribute("order", order);
                 ctx.render("partslistevaluation.html");
             } else if (ctx.method() == HandlerType.POST) {

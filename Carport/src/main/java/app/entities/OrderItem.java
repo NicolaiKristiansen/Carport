@@ -59,14 +59,11 @@ public class OrderItem {
 
     @Override
     public String toString() {
-        return "OrderItem{" +
-                "orderItemId=" + orderItemId +
-                ", order=" + order +
-                ", productVariant=" + productVariant +
-                ", quantity=" + quantity +
-                ", description='" + description + '\'' +
-                '}';
+        return "ProductVariant ID: " + productVariant.getProductVariantId() + " " +
+                "Quantity: " + quantity + " " +
+                "Description: " + description + "\n";
     }
+
 
     @Override
     public boolean equals(Object o) {

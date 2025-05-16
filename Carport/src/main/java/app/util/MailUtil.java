@@ -1,5 +1,7 @@
 package app.util;
 
+import app.entities.OrderItem;
+
 import app.services.SVG;
 import app.services.SVGConverter;
 import com.sendgrid.Method;
@@ -15,11 +17,11 @@ import org.bouncycastle.util.encoders.Base64Encoder;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.Base64;
+import java.util.List;
 
 public class MailUtil {
 
-    public boolean sendMail(String to, String email,  String password, SVG svg) throws IOException {
-        // Erstat xyx@gmail.com med din egen email, som er afsender
+    public boolean sendMail(String to, String email, String password, SVG svg, List<OrderItem> partlist) throws IOException {
         Email from = new Email("sofus@k7c.dk");
         from.setName("Johannes Fog Byggemarked");
 
@@ -30,11 +32,14 @@ public class MailUtil {
 
         Personalization personalization = new Personalization();
 
-        /* Erstat kunde@gmail.com, name, email og zip med egne værdier **/
-        /* I test-fasen - brug din egen email, så du kan modtage beskeden */
+       String partlistAsString = partlist.toString();
+
+
+
         personalization.addTo(new Email(to));
         personalization.addDynamicTemplateData("email", email);
         personalization.addDynamicTemplateData("password", password);
+        personalization.addDynamicTemplateData("partslist", partlistAsString);
         mail.addPersonalization(personalization);
 
         mail.addCategory("carportapp");
@@ -64,7 +69,6 @@ public class MailUtil {
             request.setMethod(Method.POST);
             request.setEndpoint("mail/send");
 
-            // indsæt dit skabelonid herunder
             mail.templateId = "d-3fe651994385461a929ac79c0413817a";
             request.setBody(mail.build());
             Response response = sg.api(request);
