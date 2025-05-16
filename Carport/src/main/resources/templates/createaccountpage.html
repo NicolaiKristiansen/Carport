@@ -8,28 +8,24 @@
 <body>
 <div class="headerbar">
     <img class="logo" th:src="@{/images/Fog_logo.png}">
-    <h1>Lav konto</h1>
+    <h1>Opret profil</h1>
 </div>
 
 <div class="enterfield">
     <form method="post">
-        <p>Indtast email</p>
-        <input type="text" name="email">
-        <p>Indtast kodeord</p>
-        <input type="password" name="password">
-        <p>Gentag kodeord</p>
-        <input type="password" name="password2">
-        <p>Indtast telefonnummer</p>
-        <input type="text" name="phone">
-        <p>Indtast addresse</p>
-        <input type="text" name="address">
 
-    <br>
-    <br>
+        <div class="enterfield">
+        <input type="text" name="email" placeholder="Indtast email">
+        <input type="password" name="password" placeholder="Indtast kodeord">
+        <input type="password" name="password2" placeholder="Gentag kodeord">
+        <input type="text" name="phone" placeholder="Indtast telefonnummer">
+        <input type="text" name="address" placeholder="Indtast addresse">
+
+
     <button type="submit" formaction="/createaccount">Opret profil</button>
+        </div>
     </form>
-    <br>
-    <br>
+
     <a href="/login">Log ind</a>
 </div>
 </body>
