@@ -38,7 +38,7 @@ public class Main {
     private static final ConnectionPool connectionPool = ConnectionPool.getInstance(USER, PASSWORD, URL, DB);
 
     public static void main(String[] args){
-        //Message to commit and updateeeeeeee
+        //Message to commit and updateeeeeeeee
 
         // mail method
         MailUtil mailUtil = new MailUtil();
