@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <title>All Customer Query's</title>
-    <link href="../public/css/statuspage.css" th:href="@{/css/statuspage.css}" rel="stylesheet"/>
+    <link href="../public/css/universalCSS.css" th:href="@{/css/universalCSS.css}" rel="stylesheet"/>
 </head>
 <body>
 <div th:if="${meassage}">
     <p th:text="${message}"></p>
 </div>
-<div class="headerbar">
+<div class="sellerTopPage">
     <img class="logo" th:src="@{/images/Fog_logo.png}">
     <h1>Alle kunders forespørgsler</h1>
 </div>
@@ -17,15 +17,16 @@
 <br>
 <br>
 
-<table class="table">
-    <thead class="table">
+<table class="listofquerytable">
+    <thead>
 
-    <tr class="table">
+    <tr>
         <th>Navn</th>
         <th>Telefon nummer</th>
         <th>Bredde</th>
         <th>Længde</th>
         <th>OrderId</th>
+        <th></th>
     </tr>
 
     </thead>

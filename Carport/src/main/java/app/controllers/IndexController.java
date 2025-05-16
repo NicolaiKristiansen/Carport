@@ -16,7 +16,7 @@
     import io.javalin.http.HandlerType;
 
     import java.io.IOException;
-    import java.util.ArrayList;
+
     import java.util.List;
 
 
@@ -150,36 +150,38 @@
             int height = 20;
 
             for(int side = 0; side < 2; side++){
-                y = (side == 0) ? 15: totalY - 15;
+                y = (side == 0) ? 15 : totalY - 15;
 
                 if(beamsQuantity == 2){
+                    // Draw beam and line indicating length
                     svg.addRectangle(x, y-(height/2), height, totalX, universalStyle);
                     svg.addLine(x, y, totalX, y, arrowStyle);
+                    svg.addText(totalX / 2, y + 10, 0, totalX + " cm");  // Move text down by changing `y + 10`
                     if(y == 20) {
                         svg.addLine(x + 20, y, x + 20, totalY - 20, arrowStyle);
-                        svg.addText(totalX/2, y, 0, totalX + "cm");
+                        svg.addText(x + 10, (totalY - 20) / 2, -90, String.valueOf((totalY - 20)) + " cm"); // Optional height label
                     }
                 } else if(beamsQuantity == 4){
-                    int midpoint = totalX/2;
-                    svg.addRectangle(x, y-(height/2), height, midpoint, universalStyle);
-                    svg.addRectangle(midpoint, y-(height/2), height, midpoint, universalStyle);
+                    int midpoint = totalX / 2;
+                    svg.addRectangle(x, y - (height / 2), height, midpoint, universalStyle);
+                    svg.addRectangle(midpoint, y - (height / 2), height, midpoint, universalStyle);
 
+                    // Draw lines and labels for beams
                     svg.addLine(x, y, midpoint, y, arrowStyle);
                     svg.addLine(midpoint, y, totalX, y, arrowStyle);
 
-                    svg.addText(x + (midpoint/2), y, 0, String.valueOf(totalX/2) + "cm");
-                    svg.addText(x + midpoint + (midpoint/2), y, 0, String.valueOf(totalX/2) + "cm");
+                    svg.addText(x + (midpoint / 2), y + 10, 0, String.valueOf(totalX / 2) + " cm");  // Move text down by changing `y + 10`
+                    svg.addText(x + midpoint + (midpoint / 2), y + 10, 0, String.valueOf(totalX / 2) + " cm");  // Move text down by changing `y + 10`
 
                     if(y == 20) {
                         svg.addLine(x + 20, y, x + 20, totalY - 20, arrowStyle);
-                        int beamToBeam = (totalY-20)-y;
-                        svg.addText(x+10, (totalY-20)/2, -90, String.valueOf(beamToBeam) + "cm");
+                        int beamToBeam = (totalY - 20) - y;
+                        svg.addText(x + 10, (totalY - 20) / 2, -90, String.valueOf(beamToBeam) + " cm");  // Optional height label
                     }
                 }
-
             }
-
         }
+
 
         private static void makeRafter(Order order, Calculator calculator, SVG svg){
             int totalX = order.getCarportLength();
@@ -199,7 +201,7 @@
                 }
 
                 svg.addLine(totalX-20, 0, totalX-20, totalY, arrowStyle);
-                svg.addText(totalX-20, totalY/2, -90, String.valueOf(totalY) + "cm");
+                svg.addText(totalX, totalY/2, -90, String.valueOf(totalY) + "cm");
             }
         }
 

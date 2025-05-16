@@ -3,23 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <title>Stykliste Evaluering</title>
-    <link href="../public/css/statuspage.css" th:href="@{/css/statuspage.css}" rel="stylesheet"/>
+    <link href="../public/css/universalCSS.css" th:href="@{/css/universalCSS.css}" rel="stylesheet"/>
 </head>
 <body>
 <div th:if="${meassage}">
     <p th:text="${message}"></p>
 </div>
-<div class="headerbar">
+<div class="sellerTopPage">
     <img class="logo" th:src="@{/images/Fog_logo.png}">
     <h1>Stykliste</h1>
 </div>
 <br>
 <br>
 <br>
-<table class="table">
-    <thead class="table">
+<table class="listofquerytable">
+    <thead>
 
-    <tr class="table">
+    <tr>
         <th>Produkt Variant Id</th>
         <th>Mængde</th>
         <th>Beskrivelse</th>
@@ -37,18 +37,22 @@
 
     </tbody>
 </table>
+<br>
+<br>
+<div class="text-offset">
 <label>Den totale pris for alle matrialer</label>
 <form action="/partslistevaluation" method="post">
-<p th:text="${order.totalPrice}"></p>
+<p th:text="${order.totalPrice} + ' kr'"></p>
 
     <p>Her er en tegning af carporten</p>
-    <div th:utext="${order.svg}"></div>
+    <div class="svg-content" th:utext="${order.svg}"></div>
 
-    <label>Indtast ny pris</label>
+    <p>Indtast ny pris</p>
     <input type="hidden" name="orderId" th:value="${order.orderId}">
 
     <input type="text" name="price" required><br><br>
     <input type="submit" value="Opdater Pris">
 </form>
+</div>
 </body>
 </html>
