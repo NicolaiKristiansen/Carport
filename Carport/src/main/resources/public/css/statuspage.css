@@ -24,3 +24,9 @@ body {
     margin-bottom: -80px;
     top: -5px; /* adjust as needed */
 }
+
+.center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

@@ -13,15 +13,16 @@
 
 <br>
 <br>
-<p>Her kan du se dine selvlavede carporte og deres status</p>
+
+<div class="center">
 
 <table class="table">
     <thead class="table">
 
     <tr class="table">
+        <th>Id</th>
         <th>Længde</th>
         <th>Bredde</th>
-        <th>Id</th>
         <th>Pris</th>
         <th>Status</th>
     </tr>
@@ -29,9 +30,9 @@
     </thead>
     <tbody class="table">
     <tr class="table" th:each="order : ${orders}">
+        <td th:text="${order.orderId}"></td>
         <td th:text="${order.carportLength}"></td>
         <td th:text="${order.carportWidth}"></td>
-        <td th:text="${order.orderId}"></td>
         <td th:text="${order.totalPrice}"></td>
         <td th:text="${order.orderStatusId}"></td>
         <!-- Only show "køb" when status id = 3 -->
@@ -47,6 +48,6 @@
     </tbody>
 
 </table>
-
+</div>
 </body>
 </html>
