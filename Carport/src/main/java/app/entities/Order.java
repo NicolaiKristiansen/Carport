@@ -32,8 +32,6 @@ public class Order {
         this.user = user;
     }
 
-
-
     public int getOrderId() {
         return orderId;
     }

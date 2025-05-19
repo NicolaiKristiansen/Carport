@@ -12,8 +12,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Calculator {
-
-    //Delete later
     private static final int POST = 1;
     private static final int RAFTER = 8;
     private static final int BEAM = 4;
@@ -31,7 +29,6 @@ public class Calculator {
         this.connectionPool = connectionPool;
     }
 
-    //Fulde stykliste
     public void calcCarport(Order order) throws DatabaseException {
         calcPost(order);
         calcBeams(order);
@@ -39,12 +36,9 @@ public class Calculator {
         order.setTotalPrice(totalPrice);
     }
 
-    //Stolper
     private void calcPost(Order order) throws DatabaseException {
-        //Antal stolper
         int quantity = calcPostQuantity();
         totalPrice += calcPostPrice();
-        //Længde på stolper - dvs variant
         List<ProductVariant> productVariants = ProductMapper.getVariantByProductIdAndMinLength(0 ,POST, connectionPool);
         ProductVariant productVariant = productVariants.get(0);
         OrderItem orderItem = new OrderItem(0, order, productVariant, quantity, "Stolper nedgraves 90 cm ned i jorden");
@@ -65,7 +59,6 @@ public class Calculator {
         return (productLength * quantity) * pricePerPost;
     }
 
-    //Remmer
     private void calcBeams(Order order) {
         int quantity = calcBeamQuantity();
         totalPrice += calcBeamPrice();
@@ -100,11 +93,9 @@ public class Calculator {
         return (productLength * quantity) * pricePerBeam;
     }
 
-    //Spær
     private void calcRafters(Order order) {
         int quantity = calcRafterQuantity();
         totalPrice += calcRafterPrice();
-
 
         List<ProductVariant> productVariants = ProductMapper.getVariantByProductIdAndMinLength(0 ,RAFTER, connectionPool);
         ProductVariant productVariant = productVariants.get(0);
@@ -130,7 +121,6 @@ public class Calculator {
         return (productLength * quantity) * pricePerRafter;
     }
 
-    //Styklisten består af alle orderitems i denne liste
     public List<OrderItem> getOrderItems() {
         return orderItems;
     }

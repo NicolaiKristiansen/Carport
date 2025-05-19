@@ -2,29 +2,11 @@ package app;
 
 import app.controllers.IndexController;
 import app.controllers.UserController;
-import app.entities.Order;
-import app.entities.User;
-import app.exceptions.DatabaseException;
 import app.persistence.ConnectionPool;
-import app.persistence.OrderMapper;
-
-import app.persistence.UserMapper;
-import app.services.Calculator;
-import app.util.MailUtil;
-import com.sendgrid.Method;
-import com.sendgrid.Request;
-import com.sendgrid.Response;
-import com.sendgrid.SendGrid;
-import com.sendgrid.helpers.mail.Mail;
-import com.sendgrid.helpers.mail.objects.Email;
-import com.sendgrid.helpers.mail.objects.Personalization;
 import io.javalin.Javalin;
 import io.javalin.rendering.template.JavalinThymeleaf;
 import app.config.SessionConfig;
 import app.config.ThymeleafConfig;
-
-import java.io.IOException;
-import java.sql.SQLException;
 import java.util.logging.Logger;
 
 public class Main {
@@ -38,12 +20,6 @@ public class Main {
     private static final ConnectionPool connectionPool = ConnectionPool.getInstance(USER, PASSWORD, URL, DB);
 
     public static void main(String[] args){
-        //Message to commit and updateeeeeeeee
-
-        // mail method
-        MailUtil mailUtil = new MailUtil();
-        //mailUtil.sendMail("sofus@k7c.dk", "anders@and.dk", "1234");
-
 
         Javalin app = Javalin.create(config -> {
             config.staticFiles.add("/public");
@@ -51,7 +27,6 @@ public class Main {
             config.fileRenderer(new JavalinThymeleaf(ThymeleafConfig.templateEngine()));
         }).start(7070);
 
-        // Routing
         UserController.addRoutes(app, connectionPool);
         IndexController.addRoutes(app, connectionPool);
     }
