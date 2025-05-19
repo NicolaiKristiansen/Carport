@@ -23,15 +23,16 @@
     <tr>
         <th>Navn</th>
         <th>Telefon nummer</th>
-        <th>Bredde</th>
         <th>Længde</th>
+        <th>Bredde</th>
         <th>OrderId</th>
         <th></th>
     </tr>
 
     </thead>
     <tbody class="table">
-        <tr class="table" th:each="order : ${customerQueryInformation}">
+
+        <tr class="table" th:each="order : ${customerQueryInformation}" th:if="${order.orderStatusId != 4}">
             <td th:text="${order.user.email}"></td>
             <td th:text="${order.user.phone}"></td>
             <td th:text="${order.carportWidth}"></td>
