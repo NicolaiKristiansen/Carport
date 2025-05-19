@@ -35,8 +35,8 @@
         <tr class="table" th:each="order : ${customerQueryInformation}" th:if="${order.orderStatusId != 4}">
             <td th:text="${order.user.email}"></td>
             <td th:text="${order.user.phone}"></td>
-            <td th:text="${order.carportWidth}"></td>
             <td th:text="${order.carportLength}"></td>
+            <td th:text="${order.carportWidth}"></td>
             <td th:text="${order.orderId}"></td>
             <td>
                 <form action="/partslistevaluation" method="get">
