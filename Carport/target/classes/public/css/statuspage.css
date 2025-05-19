@@ -1,10 +1,41 @@
-table, th, td, tr, tbody, thead {
-    border: 1px solid black;
+.statuspage {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    font-family: Arial, sans-serif;
+    table-layout: auto;
+    overflow-x: auto;
+    white-space: nowrap;
 }
 
-body {
-    margin: 0; /* removes default margin that would prevent full width */
-    padding: 0;
+/* Dette gælder KUN for små skærme */
+@media (max-width: 600px) {
+    .statuspage {
+        display: block; /* gør det muligt at scrolle horisontalt på mobil */
+    }
+}
+
+/* Dette gælder for større skærme (pc) */
+@media (min-width: 601px) {
+    .statuspage {
+        display: table; /* klassisk tabel-visning */
+    }
+}
+
+
+.statuspage th, .statuspage td {
+    border-bottom: 1px solid #ddd;
+    text-align: left;
+    padding: 8px;
+}
+
+.statuspage th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+}
+
+.statuspage tr:hover {
+    background-color: #f9f9f9;
 }
 
 .headerbar {

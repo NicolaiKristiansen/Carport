@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <title>Status</title>
-    <link href="../public/css/statuspage.css" th:href="@{/css/statuspage.css}" rel="stylesheet"/>
+    <link href="../public/css/universalCSS.css" th:href="@{/css/universalCSS.css}" rel="stylesheet"/>
 </head>
 <body>
-<div class="headerbar">
+<div class="TopPage">
     <img class="logo" th:src="@{/images/Fog_logo.png}">
     <h1>Status for carport</h1>
 </div>
@@ -14,9 +14,9 @@
 <br>
 <br>
 
-<div class="center">
 
-<table class="table">
+
+<table class="listofquerytable">
     <thead class="table">
 
     <tr class="table">
@@ -25,6 +25,7 @@
         <th>Bredde</th>
         <th>Pris</th>
         <th>Status</th>
+        <th></th>
     </tr>
 
     </thead>
@@ -48,6 +49,5 @@
     </tbody>
 
 </table>
-</div>
 </body>
 </html>
