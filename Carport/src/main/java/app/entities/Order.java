@@ -15,7 +15,7 @@ public class Order {
 
     private SVG svg;
 
-    public Order(int orderId, int orderStatusId, int carportWidth, int carportLength, int totalPrice, User user) {
+    public Order(int orderId, int orderStatusId, int carportLength,  int carportWidth, int totalPrice, User user) {
         this.orderId = orderId;
         this.orderStatusId = orderStatusId;
         this.carportWidth = carportWidth;
@@ -24,7 +24,7 @@ public class Order {
         this.user = user;
     }
 
-    public Order(int orderStatusId, int carportWidth, int carportLength, int totalPrice, User user) {
+    public Order(int orderStatusId, int carportLength, int carportWidth, int totalPrice, User user) {
         this.orderStatusId = orderStatusId;
         this.carportWidth = carportWidth;
         this.carportLength = carportLength;

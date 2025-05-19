@@ -37,7 +37,7 @@ public class OrderMapper {
                 int status = resultSet.getInt("status");
                 int totalPrice = resultSet.getInt("total_price");
                 User user1 = new User(userId, username, password, role, phone, address);
-                Order order = new Order(orderId, status, carportWidth, carportLength, totalPrice, user1);
+                Order order = new Order(orderId, status, carportLength, carportWidth,  totalPrice, user1);
                 orderList.add(order);
 
             }
@@ -74,7 +74,7 @@ public class OrderMapper {
                 int status = resultSet.getInt("status");
                 int totalPrice = resultSet.getInt("total_price");
                 User user1 = new User(userId, username, password, role, phone, address);
-                Order order = new Order(orderId, status, carportWidth, carportLength, totalPrice, user1);
+                Order order = new Order(orderId, status, carportLength, carportWidth,  totalPrice, user1);
                 orderList.add(order);
 
             }
@@ -108,7 +108,7 @@ public class OrderMapper {
                 int status = resultSet.getInt("status");
                 int totalPrice = resultSet.getInt("total_price");
                 User user = new User(userId, email, password, role, phone, address);
-                order = new Order(orderId, status, carportWidth, carportLength, totalPrice, user);
+                order = new Order(orderId, status, carportLength, carportWidth,  totalPrice, user);
         }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -141,7 +141,7 @@ public class OrderMapper {
                 int status = resultSet.getInt("status");
                 int totalPrice = resultSet.getInt("total_price");
                 User user = new User(userId, username, password, role, phone, address);
-                Order order = new Order(orderId, status, carportWidth, carportLength, totalPrice, user);
+                Order order = new Order(orderId, status,carportLength, carportWidth,  totalPrice, user);
                 orderList.add(order);
 
             }
