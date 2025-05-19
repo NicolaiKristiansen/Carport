@@ -28,7 +28,6 @@ public class UserMapper {
                 String userPhone = resultSet.getString("phone");
                 String userAddress = resultSet.getString("address");
                 if (PasswordUtil.checkPassword(password, hashedPassword)) {
-                    System.out.println("Login system works");
                     return new User(id, userEmail, userRole, userPhone, userAddress);
                 } else {
                     throw new DatabaseException("Incorrect password");
@@ -36,7 +35,6 @@ public class UserMapper {
 
             } else {
                 throw new DatabaseException("User not found");
-
             }
 
 
