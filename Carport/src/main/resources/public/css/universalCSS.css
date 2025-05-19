@@ -1,3 +1,4 @@
+/* For listofquery.html */
 .listofquerytable {
     width: 100%;
     border-collapse: collapse;
@@ -40,18 +41,19 @@
 
 /* Gør den mobilvenlig */
 @media (max-width: 600px) {
-    .sellerTopPage {
+    .TopPage {
         flex-direction: column;
         text-align: center;
     }
 
-    .sellerTopPage .logo {
+    .TopPage .logo {
         height: 70px;
         margin-bottom: 10px;
         top: 0;
+
     }
 
-    .sellerTopPage .headerbar {
+    .TopPage .headerbar {
         justify-content: center;
     }
 }
@@ -65,7 +67,8 @@ body {
     padding: 0;
 }
 
-.sellerTopPage {
+/* For the top of the page */
+.TopPage {
     display: flex;
     align-items: center;
     background-color: midnightblue;
@@ -74,8 +77,9 @@ body {
     box-sizing: border-box;
 }
 
+
 /* Logo placering */
-.sellerTopPage .logo {
+.TopPage .logo {
     height: 100px;
     margin-right: 15px;
     position: relative;
@@ -85,19 +89,19 @@ body {
 }
 
 /* Header-indhold */
-.sellerTopPage .headerbar {
+.TopPage .headerbar {
     flex: 1;
     display: flex;
     align-items: center;
 }
 
-/* Enhance content inside .text-offset */
+/* For partlistevaluation.html */
 .text-offset {
-    margin-left: 40px; /* Shift content slightly to the right */
-    font-family: Arial, sans-serif; /* Set a clean font for readability */
-    background-color: #f9f9f9; /* Light background for better contrast */
+    margin-left: 40px;
+    font-family: Arial, sans-serif;
+    background-color: white;
     padding: 20px;
-    border-radius: 8px; /* Rounded corners */
+    border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
     width: 80%; /* Set width, so it looks centered */
     margin-top: 30px;
@@ -107,7 +111,7 @@ body {
 .text-offset label {
     font-size: 16px;
     font-weight: bold;
-    color: #333; /* Dark text for clarity */
+    color: #333;
     margin-bottom: 10px;
     display: block; /* Ensure label is on its own line */
 }
@@ -116,7 +120,7 @@ body {
 .text-offset p {
     font-size: 14px;
     margin: 10px 0;
-    color: #666; /* Slightly lighter gray text */
+    color: #666;
 }
 
 /* Style the input fields */
@@ -133,7 +137,7 @@ body {
 
 
 .text-offset input[type="submit"] {
-    background-color: midnightblue; /* Blue color for the submit button */
+    background-color: midnightblue;
     color: white;
     padding: 10px 20px;
     font-size: 16px;
@@ -147,7 +151,6 @@ body {
     background-color: #4e4e8e; /* Darken the button on hover */
 }
 
-/* Corrected selector for the div rendered by Thymeleaf */
 .text-offset .svg-content {
     margin: 20px 0;
     max-width: 100%;
@@ -159,4 +162,124 @@ body {
     font-weight: bold;
     color: midnightblue; /* Set the price in a prominent color */
     margin-bottom: 15px;
+}
+
+
+/* For the statuspage */
+.statuspage {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    font-family: Arial, sans-serif;
+    table-layout: auto;
+    overflow-x: auto;
+    white-space: nowrap;
+}
+
+/* Dette gælder KUN for små skærme */
+@media (max-width: 600px) {
+    .statuspage {
+        display: block; /* gør det muligt at scrolle horisontalt på mobil */
+    }
+}
+
+/* Dette gælder for større skærme (pc) */
+@media (min-width: 601px) {
+    .statuspage {
+        display: table; /* klassisk tabel-visning */
+    }
+}
+
+
+.statuspage th, .statuspage td {
+    border-bottom: 1px solid #ddd;
+    text-align: left;
+    padding: 8px;
+}
+
+.statuspage th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+}
+
+.statuspage tr:hover {
+    background-color: #f9f9f9;
+}
+
+/* For the frontpage */
+.image-container {
+    display: flex;
+    flex-wrap: wrap; /* Gør det muligt at bryde til ny række */
+    justify-content: center; /* Centrer billederne horisontalt */
+    gap: 20px; /* Afstand mellem billeder */
+    padding: 20px;
+}
+
+.image-container img {
+    width: 30%; /* Ca. 3 billeder pr. række */
+    max-width: 300px; /* Undgå at de bliver for store på store skærme */
+    height: auto;
+    border-radius: 10px; /* Valgfrit: runde hjørner */
+    object-fit: cover;
+}
+
+.customCarport {
+    display: flex;
+    flex-direction: column; /* Stack image and text vertically */
+    align-items: center;     /* Center items horizontally */
+    justify-content: center; /* Center items vertically if there's space */
+    padding: 20px;
+    text-align: center;      /* Center the text inside the paragraph */
+}
+
+.customCarport img {
+    height: 500px;
+    max-width: 100%; /* Make it responsive */
+}
+
+.customCarport button {
+    color: white;
+    border: 2px solid dodgerblue; /* Add solid border */
+    border-radius: 20px;
+    padding: 10px 20px;            /* Add some spacing inside */
+    margin-top: 20px;
+    background-color: darkblue;     /* Optional: light background for contrast */
+}
+
+.line {
+    width: 90%;              /* Adjust as needed (90% of parent width) */
+    height: 2px;             /* Thickness of the line */
+    background-color: gray;  /* Line color */
+    margin: 20px auto;       /* Center the line with vertical spacing */
+    border: none;            /* Ensure no default border */
+}
+
+/* For login */
+.login {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 50px;
+    gap: 10px;
+}
+
+.login a {
+    text-decoration: none;
+    color: black;
+}
+
+/* For createAccount */
+.enterfield {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 50px;
+    gap: 10px;
+}
+
+.enterfield a {
+    text-decoration: none;
+    color: black;
 }
