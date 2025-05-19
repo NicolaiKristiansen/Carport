@@ -16,7 +16,6 @@ import java.io.IOException;
 import java.util.List;
 
 public class IndexController {
-    private static UserController userController = new UserController();
     private static String universalStyle = "stroke:black; fill:white";
     private static String arrowStyle = "stroke:black; marker-start: url(#beginArrow); marker-end: url(#endArrow);";
 
