@@ -21,10 +21,8 @@ class OrderMapperTest {
 
     @BeforeAll
     static void setupClass() {
-        try (Connection connection = connectionPool.getConnection())
-        {
-            try (Statement stmt = connection.createStatement())
-            {
+        try (Connection connection = connectionPool.getConnection()) {
+            try (Statement stmt = connection.createStatement()) {
                 // The test schema is already created, so we only need to delete/create test tables
                 stmt.execute("DROP TABLE IF EXISTS test.users");
                 stmt.execute("DROP TABLE IF EXISTS test.orders");
@@ -50,10 +48,8 @@ class OrderMapperTest {
 
     @BeforeEach
     void setUp() {
-        try (Connection connection = connectionPool.getConnection())
-        {
-            try (Statement stmt = connection.createStatement())
-            {
+        try (Connection connection = connectionPool.getConnection()) {
+            try (Statement stmt = connection.createStatement()) {
                 // Remove all rows from all tables
                 stmt.execute("DELETE FROM test.orders");
                 stmt.execute("DELETE FROM test.users");
@@ -68,8 +64,7 @@ class OrderMapperTest {
                 stmt.execute("SELECT setval('test.users_user_id_seq', COALESCE((SELECT MAX(user_id) + 1 FROM test.users), 1), false)");
             }
         }
-        catch (SQLException e)
-        {
+        catch (SQLException e) {
             e.printStackTrace();
             fail("Database connection failed");
         }
@@ -77,13 +72,11 @@ class OrderMapperTest {
 
     @Test
     void getAllOrders() {
-        try
-        {
+        try {
             List<Order> orders = OrderMapper.getAllOrders(connectionPool);
             assertEquals(3, orders.size());
         }
-        catch (DatabaseException e)
-        {
+        catch (DatabaseException e) {
             fail("Database fejl: " + e.getMessage());
         }
     }
@@ -91,44 +84,57 @@ class OrderMapperTest {
     @Test
     void getOrderById()
     {
-        try
-        {
+        try {
             User user = new User(1, "Sofus", "1234", "customer", "12345678","Lyngbygade");
             Order expected = new Order(1, 1, 780, 600, 15000, user);
             Order dbOrder = OrderMapper.getOrderById(1, connectionPool);
             assertEquals(expected, dbOrder);
         }
-        catch (DatabaseException e)
-        {
+        catch (DatabaseException e) {
             fail("Database fejl: " + e.getMessage());
         }
     }
 
     @Test
     void insertOrder() {
-        try
-        {
+        try {
             User user = new User(1, "Sofus", "1234", "customer", "12345678","Lyngbygade");
             Order newOrder = new Order(2, 550, 750, 20000, user);
             OrderMapper.insertOrder(newOrder, connectionPool);
             Order dbOrder = OrderMapper.getOrderById(newOrder.getOrderId(), connectionPool);
             assertEquals(newOrder, dbOrder);
         }
-        catch (DatabaseException e)
-        {
+        catch (DatabaseException e) {
             fail("Database fejl: " + e.getMessage());
         }
     }
 
     @Test
-    void updateOrder() throws DatabaseException {
-        int newOrder = OrderMapper.updateOrder(100, 1, 1, connectionPool);
-        Order dbOrder = OrderMapper.getOrderById(newOrder, connectionPool);
-        assertEquals(newOrder, dbOrder);
+    void updateOrder()  {
+        try {
+            Order expectedOrder = new Order(1, 1, 780, 600, 100, new User(1, "Sofus", "1234", "customer", "12345678", "Lyngbygade"));
+            int newOrder = OrderMapper.updateOrder(100, 1, 1, connectionPool);
+            Order dbOrder = OrderMapper.getOrderById(newOrder, connectionPool);
+            assertEquals(expectedOrder, dbOrder);
+        } catch (DatabaseException e) {
+            fail("Database fejl: " + e.getMessage());
+        }
+
     }
 
     @Test
     void getAllOrdersForUser() {
+        try {
+            User testUser = new User(1, "Sofus", "1234", "customer", "12345678", "Lyngbygade");
+            List<Order> orders = OrderMapper.getAllOrdersForUser(testUser, connectionPool);
 
+            assertEquals(2, orders.size()); // Forventet antal ordrer baseret på testdata
+
+            Order firstOrder = orders.get(0);
+            assertEquals(testUser.getUserId(), firstOrder.getUser().getUserId());
+
+        } catch (DatabaseException e) {
+            fail("Database fejl: " + e.getMessage());
+        }
     }
 }
