@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Status</title>
+    <link href="../public/css/styles.css" th:href="@{/css/styles.css}" rel="stylesheet"/>
+</head>
+<body>
+<div class="TopPage">
+    <img class="logo" th:src="@{/images/Fog_logo.png}">
+    <h1>Status for carport</h1>
+</div>
+
+<br>
+<br>
+
+
+
+<table class="listofquerytable">
+    <thead class="table">
+
+    <tr class="table">
+        <th>Id</th>
+        <th>Længde</th>
+        <th>Bredde</th>
+        <th>Pris</th>
+        <th>Status</th>
+        <th></th>
+    </tr>
+
+    </thead>
+    <tbody class="table">
+    <tr class="table" th:each="order : ${orders}">
+        <td th:text="${order.orderId}"></td>
+        <td th:text="${order.carportLength}"></td>
+        <td th:text="${order.carportWidth}"></td>
+        <td th:text="${order.totalPrice}"></td>
+        <td th:text="${order.orderStatusId}"></td>
+        <!-- Only show "køb" when status id = 3 -->
+        <td>
+            <div th:if="${order.orderStatusId == 3}">
+                <form action="/status" method="post">
+                    <input type="hidden" name="orderId" th:value="${order.orderId}" />
+                    <button type="submit">Køb</button>
+                </form>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+
+</table>
+</body>
+</html>
