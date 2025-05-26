@@ -122,7 +122,6 @@ public class IndexController {
         int totalX = order.getCarportLength();
         int totalY = order.getCarportWidth();
 
-        int beamsAmountPerSide = beamsQuantity / 2;
         int x = 0;
         int y = 0;
         int height = 20;
@@ -135,10 +134,6 @@ public class IndexController {
                 svg.addRectangle(x, y - (height / 2), height, totalX, universalStyle);
                 svg.addLine(x, y, totalX, y, arrowStyle);
                 svg.addText(totalX / 2, y + 10, 0, totalX + " cm");  // Move text down by changing `y + 10`
-                if (y == 20) {
-                    svg.addLine(x + 20, y, x + 20, totalY - 20, arrowStyle);
-                    svg.addText(x + 10, (totalY - 20) / 2, -90, ((totalY - 20)) + " cm"); // Optional height label
-                }
             } else if (beamsQuantity == 4) {
                 int midpoint = totalX / 2;
                 svg.addRectangle(x, y - (height / 2), height, midpoint, universalStyle);
@@ -150,12 +145,6 @@ public class IndexController {
 
                 svg.addText(x + (midpoint / 2), y + 10, 0, (totalX / 2) + " cm");  // Move text down by changing `y + 10`
                 svg.addText(x + midpoint + (midpoint / 2), y + 10, 0, (totalX / 2) + " cm");  // Move text down by changing `y + 10`
-
-                if (y == 20) {
-                    svg.addLine(x + 20, y, x + 20, totalY - 20, arrowStyle);
-                    int beamToBeam = (totalY - 20) - y;
-                    svg.addText(x + 10, (totalY - 20) / 2, -90, (beamToBeam) + " cm");  // Optional height label
-                }
             }
         }
     }
