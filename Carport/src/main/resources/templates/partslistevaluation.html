@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Stykliste Evaluering</title>
+    <link href="../public/css/styles.css" th:href="@{/css/styles.css}" rel="stylesheet"/>
+</head>
+<body>
+<div th:if="${meassage}">
+    <p th:text="${message}"></p>
+</div>
+<div class="TopPage">
+    <img class="logo" th:src="@{/images/Fog_logo.png}">
+    <h1>Stykliste</h1>
+</div>
+<br>
+<br>
+<br>
+<table class="listofquerytable">
+    <thead>
+
+    <tr>
+        <th>Produkt Variant Id</th>
+        <th>Mængde</th>
+        <th>Beskrivelse</th>
+    </tr>
+
+    </thead>
+    <tbody class="table">
+    <!-- Loop through orders for each order -->
+
+        <tr class="table" th:each="part : ${parts}">
+            <td th:text="${part.productVariant.productVariantId}"></td>
+            <td th:text="${part.quantity}"></td>
+            <td th:text="${part.description}"></td>
+        </tr>
+
+    </tbody>
+</table>
+<br>
+<br>
+<div class="text-offset">
+<label>Den totale pris for alle matrialer</label>
+<form action="/partslistevaluation" method="post">
+<p th:text="${order.totalPrice} + ' kr'"></p>
+
+    <p>Her er en tegning af carporten</p>
+    <div class="svg-content" th:utext="${order.svg}"></div>
+
+    <p>Indtast ny pris</p>
+    <input type="hidden" name="orderId" th:value="${order.orderId}">
+
+    <input type="text" name="price" required><br><br>
+    <input type="submit" value="Opdater Pris">
+</form>
+</div>
+</body>
+</html>

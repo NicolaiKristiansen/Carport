@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Acount</title>
+    <link href="../public/css/createAccount.css" th:href="@{/css/createAccount.css}" rel="stylesheet"/>
+</head>
+<body>
+<div class="headerbar">
+    <img class="logo" th:src="@{/images/Fog_logo.png}">
+    <h1>Lav konto</h1>
+</div>
+
+<div class="enterfield">
+    <form method="post">
+    <p>Venligst indsæt din email</p>
+    <input type="text">
+    <p>Venligst indtast dit kodeord</p>
+    <input type="password">
+    <p>Venligst gentag dit kodeord</p>
+    <input type="password2">
+    <br>
+    <br>
+    <button type="submit" formaction="/createAccount">Skab konto</button>
+    </form>
+    <br>
+    <br>
+    <a href="/login">Log ind, hvis du har en konto</a>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Query</title>
+    <link href="../public/css/styles.css" th:href="@{/css/styles.css}" rel="stylesheet"/>
+</head>
+<body>
+<div class="TopPage">
+    <img class="logo" th:src="@{/images/Fog_logo.png}">
+    <h1>Opret forespørgsel</h1>
+</div>
+<br>
+<br>
+
+<div class="login">
+    <form method="post" action="/frontPageHandle">
+        <p>Vælg Længde</p>
+        <select name="length">
+            <option>780</option>
+            <option>750</option>
+            <option>720</option>
+            <option>690</option>
+            <option>660</option>
+            <option>630</option>
+            <option>600</option>
+            <option>570</option>
+            <option>540</option>
+            <option>510</option>
+            <option>480</option>
+            <option>450</option>
+            <option>420</option>
+            <option>390</option>
+            <option>360</option>
+            <option>330</option>
+            <option>300</option>
+            <option>270</option>
+            <option>240</option>
+        </select>
+
+        <p>Vælg Bredde</p>
+        <select name="width">
+            <option>600</option>
+            <option>570</option>
+            <option>540</option>
+            <option>510</option>
+            <option>480</option>
+            <option>450</option>
+            <option>420</option>
+            <option>390</option>
+            <option>360</option>
+            <option>330</option>
+            <option>300</option>
+            <option>270</option>
+            <option>240</option>
+        </select>
+
+        <br><br>
+
+        <div th:if="${session.currentUser == null}">
+            <p>Du skal være logget ind for at indsende en forespørgsel!</p>
+            <button type="submit" disabled>Indsend forespørgsel</button>
+        </div>
+
+        <div th:if="${session.currentUser != null}">
+            <button type="submit">Indsend forespørgsel</button>
+        </div>
+    </form>
+
+</div>
+
+
+
+</body>
+</html>

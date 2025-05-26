@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Forside</title>
+    <link href="../public/css/styles.css" th:href="@{/css/styles.css}" rel="stylesheet"/>
+</head>
+<body>
+
+<div class="TopPage">
+    <img class="logo" th:src="@{/images/Fog_logo.png}">
+
+    <table>
+        <thead>
+        <th><button type="submit">Bolig og Design</button></th>
+        <th><button type="submit">Byggematrialer</button></th>
+        <th><button type="submit">Værktøj</button></th>
+        <th><button type="submit">El og belysning</button></th>
+        </thead>
+    </table>
+    <div th:if="${session.currentUser == null}">
+        <a href="/login"><button>Log ind</button></a>
+    </div>
+    <div th:if="${session.currentUser != null}">
+        <a href="/status"><button>Status</button></a>
+        <a href="/logout"><button>Log ud</button></a>
+    </div>
+
+</div>
+
+<br>
+<br>
+
+<div class="customCarport">
+<img th:src="@{/images/Carport.png}" alt="Carport Image">
+<a href="/createquery"><button>Lav din carport</button></a>
+</div>
+
+<p class="line"></p>
+
+
+<div class="image-container">
+    <img th:src="@{/images/Carport.png}" alt="Placeholder">
+    <img th:src="@{/images/Carport.png}" alt="Placeholder">
+    <img th:src="@{/images/Carport.png}" alt="Placeholder">
+    <img th:src="@{/images/Carport.png}" alt="Placeholder">
+    <img th:src="@{/images/Carport.png}" alt="Placeholder">
+    <img th:src="@{/images/Carport.png}" alt="Placeholder">
+    <img th:src="@{/images/Carport.png}" alt="Placeholder">
+    <img th:src="@{/images/Carport.png}" alt="Placeholder">
+    <img th:src="@{/images/Carport.png}" alt="Placeholder">
+    <img th:src="@{/images/Carport.png}" alt="Placeholder">
+    <img th:src="@{/images/Carport.png}" alt="Placeholder">
+    <img th:src="@{/images/Carport.png}" alt="Placeholder">
+
+</div>
+</body>
+</html>

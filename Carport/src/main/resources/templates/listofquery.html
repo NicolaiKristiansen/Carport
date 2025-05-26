@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>All Customer Query's</title>
+    <link href="../public/css/styles.css" th:href="@{/css/styles.css}" rel="stylesheet"/>
+</head>
+<body>
+<div th:if="${meassage}">
+    <p th:text="${message}"></p>
+</div>
+<div class="TopPage">
+    <img class="logo" th:src="@{/images/Fog_logo.png}">
+    <h1>Alle kunders forespørgsler</h1>
+</div>
+<br>
+<br>
+<br>
+
+<table class="listofquerytable">
+    <thead>
+
+    <tr>
+        <th>Navn</th>
+        <th>Telefon nummer</th>
+        <th>Længde</th>
+        <th>Bredde</th>
+        <th>OrderId</th>
+        <th></th>
+    </tr>
+
+    </thead>
+    <tbody class="table">
+
+        <tr class="table" th:each="order : ${customerQueryInformation}" th:if="${order.orderStatusId != 4}">
+            <td th:text="${order.user.email}"></td>
+            <td th:text="${order.user.phone}"></td>
+            <td th:text="${order.carportLength}"></td>
+            <td th:text="${order.carportWidth}"></td>
+            <td th:text="${order.orderId}"></td>
+            <td>
+                <form action="/partslistevaluation" method="get">
+                <input type="hidden" name="phoneNumber" th:value="${order.user.phone}"/>
+                <input type="hidden" name="width" th:value="${order.carportWidth}"/>
+                <input type="hidden" name="length" th:value="${order.carportLength}"/>
+                <input type="hidden" name="orderID" th:value="${order.orderId}"/>
+                <button type="submit" >Skab stykliste og lav tilbud</button>
+                </form>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+</body>
