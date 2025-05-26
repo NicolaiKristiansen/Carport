@@ -54,7 +54,7 @@ public class IndexController {
         order.setSvg(svg);
 
         String email = order.getUser().getEmail();
-        String password = order.getUser().getPassword();
+
         SVG svgForMail = order.getSvg();
 
 
