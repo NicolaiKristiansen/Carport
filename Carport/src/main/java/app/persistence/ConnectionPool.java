@@ -25,7 +25,7 @@ public class ConnectionPool {
     }
 
     public static ConnectionPool getInstance() {
-        return getInstance("","","","");
+        return  getInstance("","","","");
     }
 
     /***
@@ -45,14 +45,21 @@ public class ConnectionPool {
             synchronized (ConnectionPool.class) {
                 if (instance == null) {  // Double-checked locking
                     if (System.getenv("DEPLOYED") != null) {
+                        System.out.println("DEPLOYED=" + System.getenv("DEPLOYED"));
+                        System.out.println("JDBC_USER=" + System.getenv("JDBC_USER"));
+                        System.out.println("JDBC_PASSWORD=" + System.getenv("JDBC_PASSWORD"));
+                        System.out.println("JDBC_CONNECTION_STRING=" + System.getenv("JDBC_CONNECTION_STRING"));
+                        System.out.println("JDBC_DB=" + System.getenv("JDBC_DB"));
                         ds = createHikariConnectionPool(
                                 System.getenv("JDBC_USER"),
                                 System.getenv("JDBC_PASSWORD"),
                                 System.getenv("JDBC_CONNECTION_STRING"),
                                 System.getenv("JDBC_DB"));
                     } else {
+                        System.out.println("DEPLOYED is null");
                         ds = createHikariConnectionPool(user, password, url, db);
                     }
+
                     instance = new ConnectionPool();
                 }
             }
@@ -97,6 +104,7 @@ public class ConnectionPool {
 
         HikariConfig config = new HikariConfig();
         config.setDriverClassName("org.postgresql.Driver");
+        System.out.println("HERE OVER HERE: "+url+ " : "+ db);
         config.setJdbcUrl(String.format(url, db));
         config.setUsername(user);
         config.setPassword(password);

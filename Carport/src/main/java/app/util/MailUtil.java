@@ -12,7 +12,6 @@ import com.sendgrid.helpers.mail.Mail;
 import com.sendgrid.helpers.mail.objects.Attachments;
 import com.sendgrid.helpers.mail.objects.Email;
 import com.sendgrid.helpers.mail.objects.Personalization;
-import org.bouncycastle.util.encoders.Base64Encoder;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;

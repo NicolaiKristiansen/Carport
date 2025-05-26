@@ -32,7 +32,7 @@ public class IndexController {
 
         List<Order> order = OrderMapper.getAllOrdersForUser(user, connectionPool);
         ctx.attribute("orders", order);
-        ctx.render("statusPage.html");
+        ctx.render("statuspage.html");
     }
 
     public static void boughtcarport(Context ctx, ConnectionPool connectionPool) throws IOException, DatabaseException {

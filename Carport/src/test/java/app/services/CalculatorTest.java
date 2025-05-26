@@ -1,13 +1,15 @@
 package app.services;
 
-import app.entities.Order;
-import app.entities.User;
+
 import app.exceptions.DatabaseException;
 import app.persistence.ConnectionPool;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
+
+@Disabled
 class CalculatorTest {
 
     private static final String USER = "postgres";

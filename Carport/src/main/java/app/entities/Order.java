@@ -1,6 +1,5 @@
 package app.entities;
 
-import app.persistence.ConnectionPool;
 import app.services.SVG;
 
 import java.util.Objects;
