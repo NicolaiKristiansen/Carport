@@ -21,7 +21,7 @@ import java.util.List;
 
 public class MailUtil {
 
-    public boolean sendMail(String to, String email, String password, SVG svg, List<OrderItem> partlist) throws IOException {
+    public boolean sendMail(String to, String email, SVG svg, List<OrderItem> partlist) throws IOException {
         Email from = new Email("sofus@k7c.dk");
         from.setName("Johannes Fog Byggemarked");
 
@@ -36,7 +36,6 @@ public class MailUtil {
 
         personalization.addTo(new Email(to));
         personalization.addDynamicTemplateData("email", email);
-        personalization.addDynamicTemplateData("password", password);
         personalization.addDynamicTemplateData("partslist", partlistAsString);
         mail.addPersonalization(personalization);
         mail.addCategory("carportapp");

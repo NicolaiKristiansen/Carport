@@ -59,7 +59,7 @@ public class IndexController {
         System.out.println("In boughtcarport: " + partslist);
 
         MailUtil mailUtil = new MailUtil();
-        mailUtil.sendMail(email, email, password, svgForMail, partslist);
+        mailUtil.sendMail(email, email, svgForMail, partslist);
 
         OrderMapper.updateOrder(order.getTotalPrice(), 4, order.getOrderId(), connectionPool);
 
