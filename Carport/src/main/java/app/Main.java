@@ -21,6 +21,7 @@ public class Main {
 
     public static void main(String[] args){
 
+        //commit
         Javalin app = Javalin.create(config -> {
             config.staticFiles.add("/public");
             config.jetty.modifyServletContextHandler(handler ->  handler.setSessionHandler(SessionConfig.sessionConfig()));
