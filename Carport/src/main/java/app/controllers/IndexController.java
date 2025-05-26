@@ -69,8 +69,15 @@ public class IndexController {
     public static void partslistevaluation(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
         if (ctx.method() == HandlerType.GET) {
             int id = Integer.parseInt(ctx.queryParam("orderID"));
+
             Order order = OrderMapper.getOrderById(id, connectionPool);
-            OrderMapper.updateOrder(order.getTotalPrice(), 2, id, connectionPool);
+            int status;
+            if(order.getOrderStatusId() == 3) {
+                status = 3;
+            } else {
+                status = 2;
+            }
+            OrderMapper.updateOrder(order.getTotalPrice(), status, id, connectionPool);
             Calculator calculator = new Calculator(order.getCarportWidth(), order.getCarportLength(), connectionPool);
             calculator.calcCarport(order);
             List<OrderItem> parts = calculator.getOrderItems();
@@ -133,18 +140,17 @@ public class IndexController {
                 // Draw beam and line indicating length
                 svg.addRectangle(x, y - (height / 2), height, totalX, universalStyle);
                 svg.addLine(x, y, totalX, y, arrowStyle);
-                svg.addText(totalX / 2, y + 10, 0, totalX + " cm");  // Move text down by changing `y + 10`
+                svg.addText(totalX / 2, y + 10, 0, totalX + " cm");
             } else if (beamsQuantity == 4) {
                 int midpoint = totalX / 2;
                 svg.addRectangle(x, y - (height / 2), height, midpoint, universalStyle);
                 svg.addRectangle(midpoint, y - (height / 2), height, midpoint, universalStyle);
 
-                // Draw lines and labels for beams
                 svg.addLine(x, y, midpoint, y, arrowStyle);
                 svg.addLine(midpoint, y, totalX, y, arrowStyle);
 
-                svg.addText(x + (midpoint / 2), y + 10, 0, (totalX / 2) + " cm");  // Move text down by changing `y + 10`
-                svg.addText(x + midpoint + (midpoint / 2), y + 10, 0, (totalX / 2) + " cm");  // Move text down by changing `y + 10`
+                svg.addText(x + (midpoint / 2), y + 10, 0, (totalX / 2) + " cm");
+                svg.addText(x + midpoint + (midpoint / 2), y + 10, 0, (totalX / 2) + " cm");
             }
         }
     }
