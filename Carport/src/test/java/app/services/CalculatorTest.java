@@ -54,14 +54,14 @@ class CalculatorTest {
     }
 
     @Test
-    void calcBeamPrice() {
+    void calcBeamPrice()  {
         int expected = 4800;
         int actual = calculator.calcBeamPrice();
         assertEquals(expected, actual);
     }
 
     @Test
-    void calcRafterPrice() {
+    void calcRafterPrice()  {
         int expected = 15600;
         int actual = calculator.calcRafterPrice();
         assertEquals(expected, actual);

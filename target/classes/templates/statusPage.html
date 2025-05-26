@@ -3,45 +3,51 @@
 <head>
     <meta charset="UTF-8">
     <title>Status</title>
-    <link href="../public/css/statuspage.css" th:href="@{/css/statuspage.css}" rel="stylesheet"/>
+    <link href="../public/css/styles.css" th:href="@{/css/styles.css}" rel="stylesheet"/>
 </head>
 <body>
-<div class="headerbar">
+<div class="TopPage">
     <img class="logo" th:src="@{/images/Fog_logo.png}">
     <h1>Status for carport</h1>
 </div>
 
 <br>
 <br>
-<p>Her kan du se dine selvlavede carporte og deres status</p>
 
-<table class="table">
+
+
+<table class="listofquerytable">
     <thead class="table">
 
     <tr class="table">
+        <th>Id</th>
         <th>Længde</th>
         <th>Bredde</th>
-        <th>Id</th>
         <th>Pris</th>
         <th>Status</th>
+        <th></th>
     </tr>
 
     </thead>
     <tbody class="table">
-    <!-- Loop through orders for each order -->
-    <form action="/status page" method="post">
     <tr class="table" th:each="order : ${orders}">
-        <td th:text="${order.length}"></td>  <!-- Display length -->
-        <td th:text="${order.width}"></td> <!-- Display width -->
-        <td th:text="${order.id}"></td>  <!-- Display id -->
-        <td th:text="${order.price}"></td>  <!-- Display price -->
-        <td th:text="${order.status}"></td>  <!-- Display status -->
-        <td> <button type="submit">Køb</button></td>
-
+        <td th:text="${order.orderId}"></td>
+        <td th:text="${order.carportLength}"></td>
+        <td th:text="${order.carportWidth}"></td>
+        <td th:text="${order.totalPrice}"></td>
+        <td th:text="${order.orderStatusId}"></td>
+        <!-- Only show "køb" when status id = 3 -->
+        <td>
+            <div th:if="${order.orderStatusId == 3}">
+                <form action="/status" method="post">
+                    <input type="hidden" name="orderId" th:value="${order.orderId}" />
+                    <button type="submit">Køb</button>
+                </form>
+            </div>
+        </td>
     </tr>
-    </form>
     </tbody>
-</table>
 
+</table>
 </body>
 </html>
