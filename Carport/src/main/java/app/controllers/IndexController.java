@@ -40,8 +40,11 @@ public class IndexController {
         System.out.println(id);
         Order order = OrderMapper.getOrderById(id, connectionPool);
 
+        int currentprice = order.getTotalPrice();
+
         Calculator calculator = new Calculator(order.getCarportWidth(), order.getCarportLength(), connectionPool);
         calculator.calcCarport(order);
+        order.setTotalPrice(currentprice);
         SVG svg = new SVG(0, 0, "0 0 900 900", "900", "900");
 
         makeRafter(order, calculator, svg);
