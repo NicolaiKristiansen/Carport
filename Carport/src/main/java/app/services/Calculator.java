@@ -12,9 +12,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Calculator {
-    private static final int POST = 1;
+    private static final int POST = 11;
     private static final int RAFTER = 8;
-    private static final int BEAM = 4;
+    private static final int BEAM = 8;
 
     public List<OrderItem> orderItems = new ArrayList<>();
     public int totalPrice;
